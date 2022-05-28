@@ -27,7 +27,7 @@ type APIBin = {
   }
 }
 
-type Bin = {
+export type Bin = {
   id: string
   type: BinType
   collections: Date[]
@@ -41,10 +41,10 @@ type Bin = {
 const apiBinToBin = (apiBin: APIBin): Bin => ({
   id: apiBin.id,
   type: apiBin.type as BinType,
-  collections: apiBin.collections.map(date => new Date(date)),
+  collections: apiBin.collections.map(date => new Date(Date.parse(date))),
   status: {
     id: apiBin.status.id,
-    date: new Date(apiBin.status.date),
+    date: new Date(Date.parse(apiBin.status.date)),
     outcome: apiBin.status.outcome as Outcome,
   },
 })

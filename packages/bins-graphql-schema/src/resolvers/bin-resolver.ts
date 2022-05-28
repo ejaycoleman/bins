@@ -19,10 +19,10 @@ const getBins = (addressId: string, binInfo: CollectionDates): Bin[] => {
   binDates.set('Recycling', recyclingBinDay)
 
   return binTypes.map(type => {
-    const statuses = status.streetStatus.filter(s => s.type === type)
-    const [currentStatus] = statuses.sort((a, b) => {
+    const statuses = status?.streetStatus.filter(s => s.type === type)
+    const [currentStatus] = statuses?.sort((a, b) => {
       return b.date.getTime() - a.date.getTime()
-    })
+    }) || []
 
     const collectionDates = binDates.get(type)
     if (!collectionDates || !collectionDates.length) {
@@ -65,6 +65,9 @@ export class BinResolver {
     const binInfo = results.find(b => b.type === type)
     if (!binInfo) {
       throw new Error(`Could not find bin ${binId}`)
+    }
+    if (!binInfo.status) {
+      throw new Error(`Bin ${binId} has no status`)
     }
     const [,,workpack] = binInfo.status.id.split(':')
     const { postcode, firstLine } = await (new AddressLookupResolver()).addressLookupById(addressId)

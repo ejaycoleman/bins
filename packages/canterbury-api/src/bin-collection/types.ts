@@ -18,7 +18,7 @@ export type BinDates<DateType> = {
 export type BinType = 'General' | 'Food' | 'Recycling' | 'Garden' | 'Black bin' | 'Red recycling' | 'Blue Recycling'
 export const binTypes: BinType[] = ['General', 'Food', 'Recycling', 'Garden', 'Black bin', 'Red recycling', 'Blue Recycling']
 
-export type Outcome = 'Reported Missed' | 'Collection Made' | 'Side waste' /* purple sacks */ | 'More than 1 bin' /* only 1 black bin per household*/ | 'Bin not out' | 'Wrong bin put out' | 'Bin contaminated' | 'Bin broken' | 'Bin too heavy' | 'Unable to access' | 'Road closed' | 'Severe weather' | 'Due for collection' | 'Road still blocked' | 'Road blocked' | 'Road blocked - access' | 'Not collected' | 'Not subscribed' | 'Collection delayed'
+export type Outcome = 'Reported Missed' | 'Collection Made' | 'Side Waste' /* purple sacks */ | 'More Than 1 Bin' /* only 1 black bin per household*/ | 'Bin Not Out' | 'Wrong Bin Put Out' | 'Bin Contaminated' | 'Bin Broken' | 'Bin Too Heavy' | 'Unable To Access' | 'Road Closed' | 'Severe Weather' | 'Due For Collection' | 'Road Still Blocked' | 'Road Blocked' | 'Road Blocked - Access' | 'Not Collected' | 'Not Subscribed' | 'Collection Delayed'  
 
 export type StreetStatus<DateType> = {
   date: DateType
@@ -35,7 +35,7 @@ export type BinStatus<DateType> = {
 
 export type ParsedBinDates<DateType> = {
   dates: BinDates<DateType>
-  status: BinStatus<DateType>
+  status?: BinStatus<DateType>
 }
 
 export type CollectionDates = ParsedBinDates<Date>

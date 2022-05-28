@@ -23,8 +23,8 @@ export class Bin {
   @Field(() => [GraphQLISODateTime])
   collections: Date[]
 
-  @Field(() => BinStatus)
-  status: BinStatus
+  @Field(() => BinStatus, { nullable: true })
+  status?: BinStatus
 }
 
 @ObjectType()

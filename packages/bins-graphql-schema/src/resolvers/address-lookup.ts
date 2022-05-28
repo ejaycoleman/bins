@@ -22,6 +22,11 @@ export class AddressLookupResolver {
   async addressLookupById(@Arg('addressId') addressId: string): Promise<Address> {
     const [uprn, usrn] = addressId.split('-')
     // lookup in cache
-    return {} as Address
+    return {
+      id: addressId,
+      formatted: 'Flat 12, 3 Allgood Street, London, SW1A 2AA',
+      postcode: 'SW1A 2AA',
+      firstLine: 'Flat 12, 3 Allgood Street',
+    } as Address
   }
 }

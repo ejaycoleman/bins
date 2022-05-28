@@ -28,6 +28,13 @@ export const textSmallStyles = css`
   color: ${line};
 `
 
+export const TextSmallBold = styled.Text`
+  //styleName: Mobile / Text Small Bold;
+  ${textSmallStyles}
+  font-family: Poppins_600SemiBold;
+  font-weight: 600;
+`
+
 export const TextSmall = styled.Text`
   ${textSmallStyles}
 `
