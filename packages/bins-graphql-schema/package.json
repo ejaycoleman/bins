@@ -1,0 +1,27 @@
+{
+  "name": "@joshbalfour/bins-graphql-schema",
+  "packageManager": "yarn@3.1.1",
+  "scripts": {
+    "start": "ts-node-dev src/index.ts",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/graphql-iso-date": "^3.4.0",
+    "@types/node-fetch": "^2.6.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  },
+  "main": "src/index.ts",
+  "dependencies": {
+    "@joshbalfour/canterbury-api": "workspace:^",
+    "class-validator": "^0.13.2",
+    "fetch-cookie": "^2.0.3",
+    "form-data": "^4.0.0",
+    "graphql": "^15.3.0",
+    "graphql-iso-date": "^3.6.1",
+    "node-fetch": "^2.6.7",
+    "query-string": "^7.1.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "patch:type-graphql@npm:1.1.1#../../.yarn/patches/type-graphql-npm-1.1.1-82668f6e3f"
+  }
+}

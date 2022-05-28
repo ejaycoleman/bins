@@ -1,0 +1,17 @@
+{
+  "name": "@joshbalfour/bins-graphql-server",
+  "packageManager": "yarn@3.1.1",
+  "scripts": {
+    "start": "ts-node-dev src/index.ts",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@joshbalfour/bins-graphql-schema": "workspace:^",
+    "apollo-server": "^3.6.2",
+    "graphql": "^15.3.0"
+  }
+}

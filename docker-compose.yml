@@ -1,0 +1,47 @@
+version: "3"
+
+services: 
+
+  base:
+    image: node:alpine
+    command: "yarn start"
+    volumes:
+      - .:/src
+    environment:
+      DB_HOST: db:3306
+      DB_USER: root
+      DB_PASSWORD: bins
+      DB_DATABASE: bins
+    depends_on:
+      - db
+
+  graphql:
+    extends:
+      service: base
+    workdir: /src/packages/bins-graphql-server
+    ports:
+      - "4010:4010"
+    environment:
+      PORT: 4010
+
+  worker:
+    extends:
+      service: base
+    workdir: /src/packages/bins-worker
+    ports:
+      - "4020:4020"
+    environment:
+      PORT: 4020
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: bins
+      MYSQL_DATABASE: bins
+      MYSQL_USER: bins
+      MYSQL_PASSWORD: bins
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql

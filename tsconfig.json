@@ -1,6 +1,6 @@
 {
   "references": [{
-    "path": "./packages/glowmarkt-api"
+    "path": "./packages/canterbury-api"
   }],
   "files": [],
   "compilerOptions": {
