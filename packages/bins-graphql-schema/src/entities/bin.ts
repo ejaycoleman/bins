@@ -1,6 +1,6 @@
 import { BinType } from '@joshbalfour/canterbury-api'
 import { Field, ID, ObjectType, GraphQLISODateTime } from 'type-graphql'
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm'
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm'
 import { Address } from './address'
 import { BinStatus } from './bin-status'
 
@@ -24,10 +24,12 @@ export class Bin {
   @Field(() => [GraphQLISODateTime])
   collections: Date[]
 
-  @OneToOne(() => BinStatus, { eager: true })
+  @Field(() => [BinStatus])
+  @OneToMany(() => BinStatus, (status) => status.bin, { eager: true })
+  statusHistory: BinStatus[]
+
   @Field(() => BinStatus, { nullable: true })
-  @JoinColumn()
-  status?: BinStatus
+  status: BinStatus
 
   @ManyToOne(() => Address, address => address.bins)
   address: Address

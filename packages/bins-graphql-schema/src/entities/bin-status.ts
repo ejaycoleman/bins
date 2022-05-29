@@ -1,5 +1,5 @@
 import { Field, GraphQLISODateTime, ID, ObjectType } from "type-graphql"
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm"
 import { Bin } from "./bin"
 
 @Entity()
@@ -16,4 +16,8 @@ export class BinStatus {
   @Column()
   @Field()
   outcome: string
+
+  @ManyToOne(() => Bin, bin => bin.status)
+  @JoinColumn()
+  bin: Bin
 }

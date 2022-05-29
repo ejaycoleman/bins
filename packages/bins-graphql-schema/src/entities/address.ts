@@ -1,7 +1,8 @@
 import { AddressAttributes } from '@joshbalfour/canterbury-api'
 import { Field, ID, ObjectType } from 'type-graphql'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, Index, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { Bin } from './bin'
+import { Device } from './device'
 
 @ObjectType()
 @Entity()
@@ -16,6 +17,7 @@ export class Address {
 
   @Column()
   @Field()
+  @Index()
   postcode: string
 
   @Column()
@@ -32,4 +34,7 @@ export class Address {
   @Column({ nullable: true })
   @Field({ nullable: true })
   binRegion?: string
+
+  @ManyToMany(() => Device, (device) => device.address)
+  devices?: Device[]
 }

@@ -2102,6 +2102,7 @@ __metadata:
     "@types/graphql-iso-date": ^3.4.0
     "@types/node-fetch": ^2.6.1
     class-validator: ^0.13.2
+    expo-server-sdk: ^3.6.0
     fetch-cookie: ^2.0.3
     form-data: ^4.0.0
     graphql: ^15.3.0
@@ -6323,6 +6324,16 @@ __metadata:
   bin:
     expo-pwa: build/cli.js
   checksum: f30be5a1852c640204322d450efa9a20dcd25b9ab7587d58eed0629978a6a5dbf7e6c289236239a966a9696a146e567dd22c3711e50a0732ce2e68d576eb13b2
+  languageName: node
+  linkType: hard
+
+"expo-server-sdk@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "expo-server-sdk@npm:3.6.0"
+  dependencies:
+    node-fetch: ^2.6.0
+    promise-limit: ^2.7.0
+  checksum: cd155ff020ad069dbd23e10807ad593f1d3c86b5ac9b3bacc76626e6cdb26ee76c5943ebcefab5a4a464f1654a08d97a3cc64d17b1cb6631a93c7030848da2f2
   languageName: node
   linkType: hard
 
@@ -11182,6 +11193,13 @@ __metadata:
   version: 1.0.1
   resolution: "promise-inflight@npm:1.0.1"
   checksum: 22749483091d2c594261517f4f80e05226d4d5ecc1fc917e1886929da56e22b5718b7f2a75f3807e7a7d471bc3be2907fe92e6e8f373ddf5c64bae35b5af3981
+  languageName: node
+  linkType: hard
+
+"promise-limit@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "promise-limit@npm:2.7.0"
+  checksum: 3e20a46d752ab41c921feceb668b3a6d000438573e71342d42bf63373fdbafbf4b6a3f88ef5ff902a2a37be28152dc74e618e863134fd4c08c196448f4a6d28f
   languageName: node
   linkType: hard
 

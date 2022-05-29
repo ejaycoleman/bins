@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import { useEffect, useState } from 'react'
 
-const namespace = 'smartmeter'
+const namespace = 'binsapp'
 
 const homeAddressKey = `${namespace}:homeAddressId`
 

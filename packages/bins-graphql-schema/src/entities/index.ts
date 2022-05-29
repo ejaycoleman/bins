@@ -1,11 +1,11 @@
 import { Address } from "./address"
 import { Bin } from "./bin"
 import { BinStatus } from "./bin-status"
-import { Notification } from "./Notification"
+import { Device } from "./device"
 
 export default [
   Address,
-  Notification,
+  Device,
   Bin,
   BinStatus,
 ]
