@@ -62,7 +62,6 @@ export class AddressLookupResolver {
     })
 
     if (bins.length) {
-      console.log(bins[0])
       return bins
     }
 
@@ -71,15 +70,15 @@ export class AddressLookupResolver {
     const storableBins = collectionDates.map((collectionDate) => {
       const cd = binRepository.create(collectionDate)
       const status = binStatusRepository.create(collectionDate.status)
+      status.bin = cd
       statuses.push(status)
       binRepository.merge(cd, {
         address,
-        status,
       })
       return cd
     })
-    await binStatusRepository.save(statuses)
     await binRepository.save(storableBins)
+    await binStatusRepository.save(statuses)
 
     return binRepository.find({
       where: {
