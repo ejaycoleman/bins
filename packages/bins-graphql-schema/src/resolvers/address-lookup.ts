@@ -1,12 +1,14 @@
-import { Arg, Query, Resolver } from 'type-graphql'
+import { Arg, FieldResolver, Query, Resolver, Root } from 'type-graphql'
 
 import { addressLookup } from '@joshbalfour/canterbury-api'
 import { Address } from '../entities/address'
+import { findBinsForAddress } from './bin-resolver'
+import { Bin } from '../entities/bin'
 
 @Resolver(Address)
 export class AddressLookupResolver {
   @Query(() => [Address])
-  async addressLookup(@Arg('postcode') postcode: string): Promise<Address[]> {
+  async addressLookup(@Arg('postcode') postcode: string): Promise<Omit<Address, 'bins'>[]> {
     const addresses = await addressLookup(postcode)
 
     return addresses.candidates.map(address => ({
@@ -29,4 +31,10 @@ export class AddressLookupResolver {
       firstLine: 'Flat 12, 3 Allgood Street',
     } as Address
   }
+
+  @FieldResolver()
+  async bins (@Root() address: Address): Promise<Bin[]> {
+    return findBinsForAddress(address.id)
+  }
+
 }

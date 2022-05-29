@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   subcontainer: {
     flex: 1,
     maxWidth: 812,
+    width: '100%',
     marginHorizontal: 'auto',
   },
 })

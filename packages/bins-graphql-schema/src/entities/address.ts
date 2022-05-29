@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from 'type-graphql'
+import { Bin } from './bin'
 
 @ObjectType()
 export class Address {
@@ -13,4 +14,10 @@ export class Address {
 
   @Field()
   firstLine: string
+
+  @Field({ nullable: true })
+  supported?: boolean
+
+  @Field(() => [Bin], { nullable: true })
+  bins: Bin[]
 }

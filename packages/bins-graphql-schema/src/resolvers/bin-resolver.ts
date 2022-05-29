@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql'
+import { Arg, Mutation, Resolver } from 'type-graphql'
 
 import { findCollectionDates, CollectionDates, BinType, binTypes, reportMissed, getReportMissedUrl } from '@joshbalfour/canterbury-api'
 import { Bin, ReportMissedCollection } from '../entities/bin'
@@ -8,7 +8,7 @@ export const notEmpty = <TValue>(value?: TValue | null): value is TValue => {
   return value !== null && value !== undefined
 }
 
-const getBins = (addressId: string, binInfo: CollectionDates): Bin[] => {
+const collectionDatesToBins = (binInfo: CollectionDates, addressId: string): Bin[] => {
   // group by bin
   const { dates, status } = binInfo
   const { blackBinDay, foodBinDay, gardenBinDay, recyclingBinDay } = dates
@@ -42,16 +42,14 @@ const getBins = (addressId: string, binInfo: CollectionDates): Bin[] => {
   }).filter(notEmpty)
 }
 
+export const findBinsForAddress = async (addressId: string): Promise<Bin[]> => {
+  const [uprn, usrn] = addressId.split('-')
+  const results = await findCollectionDates(uprn, usrn)
+  return collectionDatesToBins(results, addressId)
+}
+
 @Resolver(Bin)
 export class BinResolver {
-  @Query(() => [Bin])
-  async findBinsForAddress(@Arg('addressId') addressId: string): Promise<Bin[]> {
-    const [uprn, usrn] = addressId.split('-')
-    const results = await findCollectionDates(uprn, usrn)
-
-    return getBins(addressId, results)
-  }
-
   @Mutation(() => Bin)
   async reportMissedCollection(
     @Arg('binId') binId: string,
@@ -61,7 +59,7 @@ export class BinResolver {
   ): Promise<ReportMissedCollection> {
     const [uprn, usrn, type] = binId.split('-')
     const addressId = `${uprn}-${usrn}`
-    const results = await this.findBinsForAddress(addressId)
+    const results = await findBinsForAddress(addressId)
     const binInfo = results.find(b => b.type === type)
     if (!binInfo) {
       throw new Error(`Could not find bin ${binId}`)
