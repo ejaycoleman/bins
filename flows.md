@@ -81,8 +81,8 @@ Query {
 Mutation {
   enableNotifications(token: "", addressId: "uprn/usrn")
   reportMissed(
-    eventId: "addressId/type/date"
-    // store below on device
+    binId: "addressId/type"
+    # store below on device
     firstName: ""
     lastName: ""
     emailAddress: ""
@@ -94,10 +94,9 @@ Mutation {
 ## DB:
 ```
 Address
-  id (uprn/usrn)
-  uprn 
-  usrn
+  id (uprn)
   postcode [idx]
+  data (JSON stringified full lookup data)
   binRegionId
 
 BinRegion

@@ -118,19 +118,21 @@ export type AddressAttributes = {
   DPA_LAST_UPDATE_DATE: string,
   DPA_DELIVERY_POINT_SUFFIX: string,
 }
+
+export type AddressCandidate = {
+  address: string
+  location: {
+    x: number
+    y: number
+  }
+  score: number
+  attributes: AddressAttributes
+}
  
 export type AddressResults = {
   spatialReference: {
     wkid: number
     latestWkid: number
   },
-  candidates: {
-    address: string
-    location: {
-      x: number
-      y: number
-    }
-    score: number
-    attributes: AddressAttributes
-  }[]
+  candidates: AddressCandidate[]
 }

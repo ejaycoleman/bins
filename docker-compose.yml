@@ -18,23 +18,23 @@ services:
   graphql:
     extends:
       service: base
-    workdir: /src/packages/bins-graphql-server
+    working_dir: /src/packages/bins-graphql-server
     ports:
       - "4010:4010"
     environment:
       PORT: 4010
 
-  worker:
-    extends:
-      service: base
-    workdir: /src/packages/bins-worker
-    ports:
-      - "4020:4020"
-    environment:
-      PORT: 4020
+  # worker:
+  #   extends:
+  #     service: base
+  #   working_dir: /src/packages/bins-worker
+  #   ports:
+  #     - "4020:4020"
+  #   environment:
+  #     PORT: 4020
 
   db:
-    image: mysql:5.7
+    image: mariadb:10.5.8
     ports:
       - "3306:3306"
     restart: always
