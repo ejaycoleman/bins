@@ -12,6 +12,7 @@ services:
       DB_USER: root
       DB_PASSWORD: bins
       DB_DATABASE: bins
+      EXPO_ACCESS_TOKEN: "asdfg"
     depends_on:
       - db
 
@@ -24,14 +25,14 @@ services:
     environment:
       PORT: 4010
 
-  # worker:
-  #   extends:
-  #     service: base
-  #   working_dir: /src/packages/bins-worker
-  #   ports:
-  #     - "4020:4020"
-  #   environment:
-  #     PORT: 4020
+  worker:
+    extends:
+      service: base
+    working_dir: /src/packages/bins-worker
+    ports:
+      - "4020:4020"
+    environment:
+      PORT: 4020
 
   db:
     image: mariadb:10.5.8

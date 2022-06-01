@@ -1,4 +1,4 @@
-import { Expo, ExpoPushReceipt } from 'expo-server-sdk'
+import { Expo, ExpoPushErrorReceipt, ExpoPushReceipt } from 'expo-server-sdk'
 import { AppDataSource } from '../data-source'
 import { Device } from '../entities/device'
 import { Notification } from '../entities/notification'
@@ -10,7 +10,7 @@ if (!accessToken) {
 
 const expo = new Expo({ accessToken })
 
-type PushNotification = {
+export type PushNotification = {
   device: Device
   body: string
   title?: string
@@ -48,19 +48,21 @@ export const sendPushNotifications = async (notifications: PushNotification[]) =
         return
       }
       const error = ticket.details?.error
-      switch (error) {
-        case 'DeviceNotRegistered':
-          invalidDevices.push(device)
-          break
-        case 'InvalidCredentials':
-          console.error('Invalid push credentials')
-          break
-        case 'MessageTooBig':
-          console.error(`Push message too big ${JSON.stringify(notif)} to device ${device.id}`)
-          break
-        case 'MessageRateExceeded':
-          console.error(`Push message rate exceeded ${JSON.stringify(notif)} to device ${device.id}`)
-          break
+      if (error) {
+        switch (error) {
+          case 'DeviceNotRegistered':
+            invalidDevices.push(device)
+            break
+          case 'InvalidCredentials':
+            console.error('Invalid push credentials')
+            break
+          case 'MessageTooBig':
+            console.error(`Push message too big ${JSON.stringify(notif)} to device ${device.id}`)
+            break
+          case 'MessageRateExceeded':
+            console.error(`Push message rate exceeded ${JSON.stringify(notif)} to device ${device.id}`)
+            break
+        }
       }
     } catch (error) {
       console.error(`${error} sending push notification ${JSON.stringify(notif)} to device ${device.id}`)
@@ -69,6 +71,8 @@ export const sendPushNotifications = async (notifications: PushNotification[]) =
 
   await AppDataSource.getRepository(Device).remove(invalidDevices)
 }
+
+const receiptIsError = (obj: ExpoPushReceipt): obj is ExpoPushErrorReceipt => obj.status === 'error'
 
 export const cleanNotifications = async () => {
   const notificationRepository = AppDataSource.getRepository(Notification)
@@ -94,10 +98,9 @@ export const cleanNotifications = async () => {
   notifications.forEach(async (notification) => {
     const receipt = allReceipts[notification.id]
     if (receipt) {
-      const { status, details } = receipt
-      if (status === 'error') {
-        if (details) {
-          switch (details.error) {
+      if (receiptIsError(receipt)) {
+        if (receipt.details?.error) {
+          switch (receipt.details.error) {
             case 'DeviceNotRegistered':
               invalidDevices.push(notification.device)
               break
@@ -112,7 +115,7 @@ export const cleanNotifications = async () => {
               break
           }
         }
-        console.error(`error ${details?.error} sending push notification ${JSON.stringify(notification)}`)
+        console.error(`error ${receipt.details?.error} sending push notification ${JSON.stringify(notification)}`)
       }
       await notificationRepository.remove(notification)
     }

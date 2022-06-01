@@ -4,8 +4,7 @@ import { addressLookup } from '@joshbalfour/canterbury-api'
 import { Address } from '../entities/address'
 import { Bin } from '../entities/bin'
 import { AppDataSource } from '../data-source'
-import { findCollectionDates } from '../mappers/collection-dates'
-import { BinStatus } from '../entities/bin-status'
+import { updateAddressData } from '../data-update'
 
 @Resolver(Address)
 export class AddressLookupResolver {
@@ -52,7 +51,6 @@ export class AddressLookupResolver {
   @FieldResolver()
   async bins (@Root() address: Address): Promise<Bin[]> {
     const binRepository = AppDataSource.getRepository(Bin)
-    const binStatusRepository = AppDataSource.getRepository(BinStatus)
     let bins = await binRepository.find({
       where: {
         address: {
@@ -65,20 +63,7 @@ export class AddressLookupResolver {
       return bins
     }
 
-    const collectionDates = await findCollectionDates(address)
-    const statuses: BinStatus[] = []
-    const storableBins = collectionDates.map((collectionDate) => {
-      const cd = binRepository.create(collectionDate)
-      const status = binStatusRepository.create(collectionDate.status)
-      status.bin = cd
-      statuses.push(status)
-      binRepository.merge(cd, {
-        address,
-      })
-      return cd
-    })
-    await binRepository.save(storableBins)
-    await binStatusRepository.save(statuses)
+    await updateAddressData(address)
 
     return binRepository.find({
       where: {

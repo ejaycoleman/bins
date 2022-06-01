@@ -2131,6 +2131,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@joshbalfour/bins-worker@workspace:packages/bins-worker":
+  version: 0.0.0-use.local
+  resolution: "@joshbalfour/bins-worker@workspace:packages/bins-worker"
+  dependencies:
+    "@joshbalfour/bins-graphql-schema": "workspace:^"
+    luxon: ^2.4.0
+    ts-node-dev: ^1.1.8
+    typescript: ^4.5.5
+  languageName: unknown
+  linkType: soft
+
 "@joshbalfour/canterbury-api@workspace:^, @joshbalfour/canterbury-api@workspace:packages/canterbury-api":
   version: 0.0.0-use.local
   resolution: "@joshbalfour/canterbury-api@workspace:packages/canterbury-api"

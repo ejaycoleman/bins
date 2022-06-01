@@ -1,7 +1,8 @@
 import { BinType } from '@joshbalfour/canterbury-api'
-import { Field, ID, ObjectType, GraphQLISODateTime } from 'type-graphql'
+import { Field, GraphQLISODateTime, ID, ObjectType } from 'type-graphql'
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm'
 import { Address } from './address'
+import { BinCollection } from './bin-collection'
 import { BinStatus } from './bin-status'
 
 @Entity()
@@ -15,12 +16,10 @@ export class Bin {
   @Field()
   type: BinType
 
-  @Column('simple-array', {
-    transformer: {
-      from: (value: string[]) => value.map(v => new Date(v)),
-      to: (value: Date[]) => value.map(v => v.toISOString()),
-    },
-  })
+  @OneToMany(() => BinCollection, (collection) => collection.bin, { eager: true })
+  @Field(() => [BinCollection])
+  collectionDates: BinCollection[]
+
   @Field(() => [GraphQLISODateTime])
   collections: Date[]
 

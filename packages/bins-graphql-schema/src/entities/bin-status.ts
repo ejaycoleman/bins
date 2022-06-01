@@ -1,3 +1,4 @@
+import { Outcome } from "@joshbalfour/canterbury-api"
 import { Field, GraphQLISODateTime, ID, ObjectType } from "type-graphql"
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm"
 import { Bin } from "./bin"
@@ -15,7 +16,7 @@ export class BinStatus {
 
   @Column()
   @Field()
-  outcome: string
+  outcome: Outcome
 
   @ManyToOne(() => Bin, bin => bin.status)
   @JoinColumn()

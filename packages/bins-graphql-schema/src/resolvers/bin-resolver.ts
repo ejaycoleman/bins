@@ -28,9 +28,14 @@ export class BinResolver {
   }
 
   @FieldResolver()
-  async status(@Root() bin: Bin): Promise<BinStatus> {
+  status(@Root() bin: Bin): BinStatus {
     return bin.statusHistory.sort((a, b) => {
       return b.date > a.date ? -1 : 1
     })[0]
+  }
+
+  @FieldResolver()
+  collections (@Root() bin: Bin): Date[] {
+    return bin.collectionDates.map(c => c.date)
   }
 }
