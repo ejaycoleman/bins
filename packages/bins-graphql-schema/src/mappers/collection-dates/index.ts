@@ -6,12 +6,16 @@ import * as canterbury from './canterbury'
 export const findCollectionDates = async (address: Address) => {
   if (!address.binRegion) {
     // try all
-    const collectionDates = await canterbury.getCollectionDates(address)
-    if (collectionDates) {
-      await AppDataSource.getRepository(Address).update(address.id, {
-        binRegion: 'canterbury',
-      })
-      return collectionDates
+    try {
+      const collectionDates = await canterbury.getCollectionDates(address)
+      if (collectionDates) {
+        await AppDataSource.getRepository(Address).update(address.id, {
+          binRegion: 'canterbury',
+        })
+        return collectionDates
+      }
+    } catch (e) {
+      // not supported
     }
   }
 

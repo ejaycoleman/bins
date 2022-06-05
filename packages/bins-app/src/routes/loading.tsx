@@ -1,7 +1,7 @@
-import { Text } from 'react-native'
+import { AnimatedLoadingIndicator } from '../components/LoadingIndicator'
 
 export const Loading = () => (
   <>
-     <Text>Loading...</Text>
-   </>
+     <AnimatedLoadingIndicator loading />
+  </>
 )

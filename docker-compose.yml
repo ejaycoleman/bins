@@ -13,8 +13,6 @@ services:
       DB_PASSWORD: bins
       DB_DATABASE: bins
       EXPO_ACCESS_TOKEN: "asdfg"
-    depends_on:
-      - db
 
   graphql:
     extends:
@@ -24,6 +22,8 @@ services:
       - "4010:4010"
     environment:
       PORT: 4010
+    depends_on:
+      - db
 
   worker:
     extends:
@@ -33,6 +33,8 @@ services:
       - "4020:4020"
     environment:
       PORT: 4020
+    depends_on:
+      - db
 
   db:
     image: mariadb:10.5.8

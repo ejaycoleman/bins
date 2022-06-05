@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
 
 const namespace = 'binsapp'
@@ -6,7 +6,13 @@ const namespace = 'binsapp'
 const homeAddressKey = `${namespace}:homeAddressId`
 
 export const getHomeAddressId = async () => (await AsyncStorage.getItem(homeAddressKey)) || undefined
-export const setHomeAddressId = async (homeAddressId: string) => await AsyncStorage.setItem(homeAddressKey, homeAddressId)
+export const setHomeAddressId = async (homeAddressId?: string) => {
+  if (homeAddressId) {
+    await AsyncStorage.setItem(homeAddressKey, homeAddressId)
+  } else {
+    await AsyncStorage.removeItem(homeAddressKey)
+  }
+}
 
 export const useHomeAddressId = () => {
   const [loading, setLoading] = useState(true)

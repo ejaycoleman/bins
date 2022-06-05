@@ -36,9 +36,11 @@ export const updateAddressData = async (address: Address) => {
       id: collectionDate.id,
       type: collectionDate.type,
     })
-    const status = binStatusRepository.create(collectionDate.status)
-    status.bin = cd
-    statuses.push(status)
+    if (collectionDate.status) {
+      const status = binStatusRepository.create(collectionDate.status)
+      status.bin = cd
+      statuses.push(status)
+    }
     const collectionDates = collectionDate.collections.map(date => 
       binCollectionRepository.create({
         date,

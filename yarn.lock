@@ -2443,13 +2443,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-picker/picker@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "@react-native-picker/picker@npm:2.4.1"
+"@react-native-picker/picker@npm:2.2.1":
+  version: 2.2.1
+  resolution: "@react-native-picker/picker@npm:2.2.1"
   peerDependencies:
     react: 16 || 17
     react-native: ">=0.57"
-  checksum: c47c7c307eb713715905e58ca693e128ef424720d26a88c775008960d3ebd60f2f791818ec595bfd41d5d308c684c1434839b7948f649936659df1401e7e1057
+  checksum: ae4842a395f2bb978ec15113868ce2fa4958faa5b4638bfb54979c93928ff8eda010528d996f1b4fe701c810d9fcac27f7db29ea72334762615cd72d4c1b2c32
   languageName: node
   linkType: hard
 
@@ -3944,7 +3944,7 @@ __metadata:
     "@joshbalfour/bins-graphql-schema": "workspace:^"
     "@react-native-async-storage/async-storage": ~1.15.0
     "@react-native-community/async-storage": ^1.12.1
-    "@react-native-picker/picker": ^2.4.1
+    "@react-native-picker/picker": 2.2.1
     "@types/react": ~17.0.21
     "@types/react-native": ~0.64.12
     babel-plugin-transform-typescript-metadata: ^0.3.2

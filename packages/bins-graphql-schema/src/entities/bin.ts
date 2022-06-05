@@ -28,7 +28,7 @@ export class Bin {
   statusHistory: BinStatus[]
 
   @Field(() => BinStatus, { nullable: true })
-  status: BinStatus
+  status?: BinStatus
 
   @ManyToOne(() => Address, address => address.bins)
   address: Address

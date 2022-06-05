@@ -9,7 +9,7 @@ import { useFonts, Poppins_700Bold, Poppins_600SemiBold, Poppins_400Regular } fr
 import { client } from './graphql'
 import { Loading } from './routes/loading'
 import { offBlack, offWhite } from './colors'
-import { Signup } from './routes/Signup'
+import { Signup } from './routes/signup'
 import { useHomeAddressId } from './hooks/use-home-addressId'
 import { Home } from './routes/home'
 

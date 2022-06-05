@@ -45,7 +45,7 @@ type APIBin = {
   id: string
   type: string
   collections: string[]
-  status: {
+  status?: {
     id: string
     date: string
     outcome: string
@@ -56,7 +56,7 @@ export type Bin = {
   id: string
   type: BinType
   collections: Date[]
-  status: {
+  status?: {
     id: string
     date: Date
     outcome: Outcome
@@ -67,11 +67,11 @@ const apiBinToBin = (apiBin: APIBin): Bin => ({
   id: apiBin.id,
   type: apiBin.type as BinType,
   collections: apiBin.collections.map(date => new Date(Date.parse(date))),
-  status: {
+  status: apiBin.status ? {
     id: apiBin.status.id,
     date: new Date(Date.parse(apiBin.status.date)),
     outcome: apiBin.status.outcome as Outcome,
-  },
+  } : undefined,
 })
 
 export const useAddressLookup = (postcode: string) => {
@@ -88,7 +88,7 @@ export const useAddressLookup = (postcode: string) => {
 }
 
 export const useAddressLookupById = (addressId: string) => {
-  const { loading, error, data } = useQuery(AddressLookupById, {
+  const { loading, error, data, refetch } = useQuery(AddressLookupById, {
     variables: { addressId },
   })
   const address = data?.addressLookupById
@@ -100,5 +100,8 @@ export const useAddressLookupById = (addressId: string) => {
       ...address,
       bins: address?.bins?.map(apiBinToBin) || [],
     } as Address,
+    refetch: () => refetch({
+      addressId,
+    }),
   }
 }
