@@ -50,7 +50,7 @@ export const LandingPage = () => (
     <Center>
       <MediumLogo />
       <TextContainer>
-        <HugeBold>Bins App</HugeBold>
+        <HugeBold>Bin Notifier</HugeBold>
         <TextSmallBold style={{ marginVertical: 21 }}>
           Get notified when your bins need taking out, and are collected.
         </TextSmallBold>

@@ -33,7 +33,7 @@ export const TopBar = ({ isSettings }: { isSettings?: boolean }) => {
 
   return (
     <TopBarContainer>
-      <TextSmallBold style={{ flex: 1 }}>Bin App</TextSmallBold>
+      <TextSmallBold style={{ flex: 1 }}>Bin Notifier</TextSmallBold>
       {!isSettings && (
         <TouchableOpacity style={{
           position: 'absolute',

@@ -243,10 +243,10 @@ export const Signup = () => {
     <Container>
       <Header>
         <TitleContainer>
-          <HugeBold style={{ marginTop: 16, marginBottom: 16, flex: 1, textAlign: 'center' }}>Bins App</HugeBold>
+          <HugeBold style={{ marginTop: 16, marginBottom: 16, flex: 1, textAlign: 'center' }}>Bin Notifier</HugeBold>
         </TitleContainer>
         <TextSmall>
-          Get reminded when to put your bins out, and when to get them back.
+          Get notified when to put your bins out, and when to get them back.
         </TextSmall>
       </Header>
       <Routes>

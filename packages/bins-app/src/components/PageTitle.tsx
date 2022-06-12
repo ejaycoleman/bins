@@ -9,7 +9,7 @@ export const PageTitle = () => {
   const location = useLocation()
   if (Platform.OS === 'web') {
     const [,route] = location.pathname.split('/')
-    document.title = `Bins - ${route ? capitalizeFirstLetter(route) : defaultText}`
+    document.title = `Bin Notifier - ${route ? capitalizeFirstLetter(route) : defaultText}`
   }
   return null
 }
