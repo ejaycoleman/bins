@@ -76,10 +76,10 @@ export class NotificationResolver {
     return true
   }
 
-  @Query(() => Device)
-  async getDevice(@Arg('token') token: string): Promise<Device> {
+  @Query(() => Device, { nullable: true })
+  async getDevice(@Arg('token') token: string): Promise<Device | null> {
     const deviceRepository = AppDataSource.getRepository(Device)
-    const device = await deviceRepository.findOneOrFail({
+    const device = await deviceRepository.findOne({
       where: {
         token,
       },

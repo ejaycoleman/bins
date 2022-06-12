@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "bins",
+    "name": "bin notifier",
     "slug": "bins",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,13 +17,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.joshbalfour.bins"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.joshbalfour.bins"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,14 +33,7 @@
     "plugins": [
       [
         "expo-notifications",
-        {
-          "icon": "./local/assets/notification-icon.png",
-          "color": "#ffffff",
-          "sounds": [
-            "./local/assets/notification-sound.wav",
-            "./local/assets/notification-sound-other.wav"
-          ]
-        }
+        {}
       ]
     ]
   }

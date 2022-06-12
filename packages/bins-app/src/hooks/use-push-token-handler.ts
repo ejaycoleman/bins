@@ -6,7 +6,7 @@ import { useEnableNotifications } from './use-enable-notifications'
 import { useHomeAddressId } from './use-home-addressId'
 
 const namespace = 'binsapp'
-const pushTokenKey = `${namespace}:pushToken`
+const pushTokenKey = `${namespace}:pushToken2`
 
 const getPushToken = async (): Promise<string | undefined> => (await AsyncStorage.getItem(pushTokenKey)) || undefined
 export const persistPushToken = async (pushToken?: string) => {
@@ -26,7 +26,7 @@ export const getRemotePushToken = async (): Promise<string | undefined> => {
   const expoPushToken = await Notifications.getExpoPushTokenAsync({
     experienceId: '@joshbalfour/bins',
   })
-  persistPushToken(expoPushToken.data)
+  await persistPushToken(expoPushToken.data)
   return expoPushToken.data
 }
 
@@ -34,15 +34,19 @@ export const usePushTokenHandler = () => {
   const { homeAddressId } = useHomeAddressId()
   const { enableNotifications } = useEnableNotifications(homeAddressId)
 
-  useEffect(() => {
-    const sub = Notifications.addPushTokenListener(async () => {
+  const callback = async () => {
+    console.log('addPushTokenListener')
       const token = await getRemotePushToken()
       if (token) {
         await enableNotifications(token)
       }
-    })
+  }
+
+  useEffect(() => {
+    callback()
+    const sub = Notifications.addPushTokenListener(callback)
     return () => {
       sub.remove()
     }
-  })
+  }, [])
 }
