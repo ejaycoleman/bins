@@ -1,5 +1,5 @@
 import { AnimatedLoadingIndicator } from '../components/LoadingIndicator'
 
-export const Loading = () => (
-  <AnimatedLoadingIndicator fill="white" loading />
+export const Loading = ({ style }: { style?: any }) => (
+  <AnimatedLoadingIndicator fill="white" loading style={style} />
 )

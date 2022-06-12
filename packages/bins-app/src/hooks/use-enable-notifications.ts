@@ -15,7 +15,7 @@ const DisableNotifications = gql`
   }
 `
 
-type Notification = {
+type Device = {
   id: string
   token: string
 }
@@ -28,17 +28,16 @@ export const useEnableNotifications = (addressId?: string) => {
     loading: enableData.loading || disableData.loading,
     error: enableData.error || disableData.error,
     enableNotifications: async (token: string) => {
-      if (!addressId) {
-        throw new Error("addressId is required")
+      try {
+        if (!addressId) {
+          throw new Error("addressId is required")
+        }
+        const result = await mutateEnable({ variables: { addressId, token } })
+        return result.data?.enableNotifications as Device
+      } catch (e) {
+        console.error(e)
+        return undefined
       }
-      const { data } = await mutateEnable({
-        variables: {
-          addressId,
-          token,
-        },
-      })
-
-      return data?.enableNotifications as Notification
     },
     disableNotifications: async (token: string) => {
       try {

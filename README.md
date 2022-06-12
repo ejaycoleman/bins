@@ -1,6 +1,6 @@
-# Bins App
+# Bins Notifier
 
-Sends you push notifications when to put your bins out, lets you know when they're collected, and lets you report when they weren't collected.
+Notifies when to put your bins out, when they're collected, and lets you report when they weren't collected.
 
 ## Todo
 
@@ -9,10 +9,6 @@ Sends you push notifications when to put your bins out, lets you know when they'
     * backend
     * web app
     * website
-  * publishing
-    * push notification certs, etc.
-    * eas update
-    * privacy policy
 
 * V1 app/website
   * (web)app

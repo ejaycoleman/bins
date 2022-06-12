@@ -35,17 +35,19 @@ export const usePushTokenHandler = () => {
   const { enableNotifications } = useEnableNotifications(homeAddressId)
 
   const callback = async () => {
-      const token = await getRemotePushToken()
-      if (token) {
-        await enableNotifications(token)
-      }
+    const token = await getRemotePushToken()
+    if (token) {
+      await enableNotifications(token)
+    }
   }
 
   useEffect(() => {
-    callback()
-    const sub = Notifications.addPushTokenListener(callback)
-    return () => {
-      sub.remove()
+    if (homeAddressId) {
+      callback()
+      const sub = Notifications.addPushTokenListener(callback)
+      return () => {
+        sub.remove()
+      }
     }
-  }, [])
+  }, [homeAddressId])
 }

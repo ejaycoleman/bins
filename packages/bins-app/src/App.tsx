@@ -6,7 +6,8 @@ import { Route, Routes, useNavigate } from 'react-router'
 import { ApolloProvider } from '@apollo/client'
 import { useFonts, Poppins_700Bold, Poppins_600SemiBold, Poppins_400Regular } from '@expo-google-fonts/poppins'
 import * as NavigationBar from 'expo-navigation-bar'
-
+import * as Updates from 'expo-updates'
+import styled from 'styled-components/native'
 import { client } from './graphql'
 import { Loading } from './routes/loading'
 import { offBlack, offWhite } from './colors'
@@ -18,6 +19,7 @@ import { PageTitle } from './components/PageTitle'
 import { Privacy } from './routes/privacy'
 import { LandingPage } from './routes/landing-page'
 import { PushTokenHandler } from './components/PushTokenHandler'
+import { TextSmallBold } from './components/Text'
 
 const Redirect = () => {
   const { homeAddressId, loading } = useHomeAddressId()
@@ -39,12 +41,49 @@ const Redirect = () => {
   return <LandingPage />
 }
 
+const useUpdater = () => {
+  const [checkingForUpdates, setCheckingForUpdates] = React.useState(false)
+  const [isUpdating, setIsUpdating] = React.useState(false)
+
+  useEffect(() => {
+    if (!Updates.createdAt) {
+      return
+    }
+    setCheckingForUpdates(true)
+    Updates.checkForUpdateAsync()
+      .then(({ isAvailable }) => {
+        setCheckingForUpdates(false)
+        if (isAvailable) {
+          setIsUpdating(true)
+          return Updates.fetchUpdateAsync()
+            .then(() => {
+              setIsUpdating(false)
+              Updates.reloadAsync()
+            })
+        }
+      }).catch(console.error)
+  }, [])
+
+  return {
+    checkingForUpdates,
+    isUpdating,
+  }
+}
+
+const LoadingContainer = styled.View`
+  flex: 1;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+`
+
 export default function App() {
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_600SemiBold,
     Poppins_400Regular,
   })
+  const { checkingForUpdates, isUpdating } = useUpdater()
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -52,10 +91,36 @@ export default function App() {
     }
   }, [])
 
+ 
+
   if (!fontsLoaded) {
     return (
       <Containers>
-        <Loading />
+        <LoadingContainer>
+          <Loading style={{
+            top: '40%',
+            left: '50%',
+            marginLeft: -16
+          }} />
+        </LoadingContainer>
+      </Containers>
+    )
+  }
+
+  if (checkingForUpdates || isUpdating) {
+    return (
+      <Containers>
+        <LoadingContainer>
+          <Loading style={{
+            top: '40%',
+            left: '50%',
+            marginLeft: -16
+          }} />
+          <TextSmallBold style={{ marginTop: 16 }}>
+            {checkingForUpdates && 'Checking for updates...'}
+            {isUpdating && 'Updating...'}
+          </TextSmallBold>
+        </LoadingContainer>
       </Containers>
     )
   }
