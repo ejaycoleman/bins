@@ -2,13 +2,8 @@ import { Expo, ExpoPushErrorReceipt, ExpoPushReceipt } from 'expo-server-sdk'
 import { AppDataSource } from '../data-source'
 import { Device } from '../entities/device'
 import { Notification } from '../entities/notification'
-const accessToken = process.env.EXPO_ACCESS_TOKEN
 
-if (!accessToken) {
-  throw new Error('no EXPO_ACCESS_TOKEN env var set')
-}
-
-const expo = new Expo({ accessToken })
+const expo = new Expo()
 
 export type PushNotification = {
   device: Device

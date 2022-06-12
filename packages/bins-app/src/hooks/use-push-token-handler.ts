@@ -35,7 +35,6 @@ export const usePushTokenHandler = () => {
   const { enableNotifications } = useEnableNotifications(homeAddressId)
 
   const callback = async () => {
-    console.log('addPushTokenListener')
       const token = await getRemotePushToken()
       if (token) {
         await enableNotifications(token)
