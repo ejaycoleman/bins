@@ -12,3 +12,4 @@ node_modules
 56
 dist
 tmp
+packages/.DS_Store

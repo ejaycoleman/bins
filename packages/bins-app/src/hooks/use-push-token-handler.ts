@@ -1,5 +1,5 @@
 import * as Notifications from 'expo-notifications'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { useEnableNotifications } from './use-enable-notifications'
@@ -9,7 +9,7 @@ const namespace = 'binsapp'
 const pushTokenKey = `${namespace}:pushToken`
 
 const getPushToken = async (): Promise<string | undefined> => (await AsyncStorage.getItem(pushTokenKey)) || undefined
-const persistPushToken = async (pushToken?: string) => {
+export const persistPushToken = async (pushToken?: string) => {
   if (pushToken) {
     await AsyncStorage.setItem(pushTokenKey, pushToken)
   } else {
@@ -17,38 +17,32 @@ const persistPushToken = async (pushToken?: string) => {
   }
 }
 
-const usePushToken = () => {
-  const [pushToken, setPushToken] = useState<string | null>(null)
-  const sub = Notifications.addPushTokenListener(async () => {
-    const expoPushToken = await Notifications.getExpoPushTokenAsync({
-      experienceId: '@joshbalfour/bins',
-    })
-    setPushToken(expoPushToken.data)
-  })
+export const getRemotePushToken = async (): Promise<string | undefined> => {
+  const pushToken = await getPushToken()
+  if (pushToken) {
+    return pushToken
+  }
 
-  useEffect(() => {
-    return () => {
-      sub.remove()
-    }
+  const expoPushToken = await Notifications.getExpoPushTokenAsync({
+    experienceId: '@joshbalfour/bins',
   })
-
-  return pushToken
+  persistPushToken(expoPushToken.data)
+  return expoPushToken.data
 }
 
 export const usePushTokenHandler = () => {
   const { homeAddressId } = useHomeAddressId()
   const { enableNotifications } = useEnableNotifications(homeAddressId)
-  const pushToken = usePushToken()
 
   useEffect(() => {
-    if (pushToken) {
-      getPushToken().then((persistedPushToken) => {
-        if (persistedPushToken && persistedPushToken !== pushToken) {
-          persistPushToken(pushToken).then(() => {
-            enableNotifications(pushToken)
-          })
-        }
-      })
+    const sub = Notifications.addPushTokenListener(async () => {
+      const token = await getRemotePushToken()
+      if (token) {
+        await enableNotifications(token)
+      }
+    })
+    return () => {
+      sub.remove()
     }
-  }, [pushToken])
+  })
 }

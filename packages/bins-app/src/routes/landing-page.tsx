@@ -66,8 +66,8 @@ export const LandingPage = () => (
             <TextSmallBold style={{ marginVertical: 21 }}>or</TextSmallBold>
           </>
         )}
-        <ButtonsContainer>
-          <Button text="Get Started" to="/signup" />
+        <ButtonsContainer style={{ marginTop: 0 }}>
+          <Button text={Platform.OS === 'web' ? 'Use in Browser' : 'Get Started'} to="/signup" />
         </ButtonsContainer>
       </TextContainer>
     </Center>

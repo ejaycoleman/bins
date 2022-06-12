@@ -1,4 +1,4 @@
-import { usePermissions, getExpoPushTokenAsync, requestPermissionsAsync } from 'expo-notifications'
+import { usePermissions, requestPermissionsAsync } from 'expo-notifications'
 import styled from 'styled-components/native'
 import { useNavigate } from 'react-router-native'
 import { HugeBold, TextSmallBold } from '../components/Text'
@@ -10,6 +10,7 @@ import { useEnableNotifications } from '../hooks/use-enable-notifications'
 import { Alert, Linking, Platform, ScrollView, Share } from 'react-native'
 import { useDownloadData } from '../hooks/use-download-data'
 import { useHandleBack } from '../hooks/use-handle-back'
+import { getRemotePushToken, persistPushToken } from '../hooks/use-push-token-handler'
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -41,10 +42,8 @@ const PushNotificationButton = () => {
   const { disableNotifications, loading } = useEnableNotifications(homeAddressId)
 
   const disable = async () => {
-    const expoPushToken = await getExpoPushTokenAsync({
-      experienceId: '@joshbalfour/bins',
-    })
-    await disableNotifications(expoPushToken.data)
+    const pushToken = await getRemotePushToken()
+    await disableNotifications(pushToken)
   }
   const enable = async () => {
     await requestPermissionsAsync()
@@ -76,10 +75,9 @@ const ResetButton = ({ text, variant = 'primary' }: { text:string; variant: Butt
 
   const disable = async () => {
     if (status.granted) {
-      const expoPushToken = await getExpoPushTokenAsync({
-        experienceId: '@joshbalfour/bins',
-      })
-      await disableNotifications(expoPushToken.data)
+      const pushToken = await getRemotePushToken()
+      await disableNotifications(pushToken)
+      await persistPushToken(undefined)
     }
   }
 
@@ -140,8 +138,6 @@ const Spacer = styled.View`
 `
 
 export const Settings = () => {
-  useHandleBack()
-
   return (
     <Container>
       <TopBar isSettings />

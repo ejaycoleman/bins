@@ -3,17 +3,16 @@ import { Route, Routes, useNavigate, useParams } from 'react-router'
 import styled, { css } from 'styled-components/native'
 import { postcodeValidator } from 'postcode-validator'
 import { Picker } from '@react-native-picker/picker'
-import * as Notifications from 'expo-notifications'
 
 import { Button } from '../components/Button'
 import { TextInput } from '../components/Input'
 import { HugeBold, TextSmall } from '../components/Text'
 import { useAddressLookup } from '../hooks/use-address-lookup'
-import { useEnableNotifications } from '../hooks/use-enable-notifications'
 import { useHomeAddressId } from '../hooks/use-home-addressId'
 import Svg, { Path } from 'react-native-svg'
 import { Platform, SafeAreaView, ScrollView } from 'react-native'
 import { AnimatedLoadingIndicator } from '../components/LoadingIndicator'
+import { requestPermissionsAsync } from 'expo-notifications'
 
 const Header = styled.View`
   flex-direction: column;
@@ -150,7 +149,7 @@ const Indicator = styled.View`
 export const Step2 = () => {
   const navigate = useNavigate()
   const { postcode } = useParams()
-  const [addressId, setAddressId] = useState('')
+  const [addressId, setAddressId] = useState(undefined)
   const { addresses, loading } = useAddressLookup(postcode)
   const { sethomeAddressId } = useHomeAddressId()
 
@@ -208,19 +207,15 @@ const ButtonContainer = styled.View`
 export const Step3 = () => {
   const navigate = useNavigate()
   const { addressId } = useParams()
-  const { enableNotifications, loading } = useEnableNotifications(addressId)
-
+  const destination = `/home/${addressId}`
   return (
     <Body>
       <StepContainer>
         <TextSmall style={{ marginBottom: 21 }}>Turn on push notifications</TextSmall>
         <ButtonContainer>
-          <Button loading={loading} text={"Turn On"} onClick={async () => {
-            navigate('/') // fetch tokens asyncronously as sometimes this can take a while
-            const expoPushToken = await Notifications.getExpoPushTokenAsync({
-              experienceId: '@joshbalfour/bins',
-            })
-            await enableNotifications(expoPushToken.data)
+          <Button text={"Turn On"} onClick={async () => {
+            await requestPermissionsAsync()
+            navigate(destination)
           }} />
         </ButtonContainer>
       </StepContainer>
@@ -230,7 +225,7 @@ export const Step3 = () => {
           navigate(-1)
         }} />
         <Button variant="text" text={"Skip"} onClick={() => {
-          navigate('/')
+          navigate(destination)
         }} />
       </Footer>
     </Body>

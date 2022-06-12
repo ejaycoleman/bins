@@ -1,5 +1,6 @@
 import { gql, useLazyQuery } from "@apollo/client"
-import { getExpoPushTokenAsync, usePermissions } from "expo-notifications"
+import { usePermissions } from "expo-notifications"
+import { getRemotePushToken } from "./use-push-token-handler"
 
 const GetDevice = gql`
   query getDevice($token: String!) {
@@ -45,13 +46,11 @@ export const useDownloadData = () => {
       if (!status.granted) {
         return undefined
       }
-      const expoPushToken = await getExpoPushTokenAsync({
-        experienceId: '@joshbalfour/bins',
-      })
-      if (!expoPushToken?.data) {
+      const token = await getRemotePushToken()
+      if (!token) {
         return undefined
       }
-      const result = await query({ variables: { token: expoPushToken.data } })
+      const result = await query({ variables: { token } })
 
       return result.data?.getDevice ? JSON.stringify(result.data?.getDevice, null, 2) : undefined
     }

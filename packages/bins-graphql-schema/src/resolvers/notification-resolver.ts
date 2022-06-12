@@ -37,7 +37,7 @@ export class NotificationResolver {
   @Mutation(() => Boolean)
   async disableNotifications(@Arg('token') token: string): Promise<boolean> {
     const deviceRepository = AppDataSource.getRepository(Device)
-    const device = await deviceRepository.findOneOrFail({
+    const device = await deviceRepository.findOne({
       where: {
         token,
       },

@@ -52,7 +52,7 @@ const ButtonLink = styled(Link)<{ variant: ButtonVariant }>`
 export const Button = ({ onClick, to, text, disabled, variant = 'primary', loading }: { onClick?: () => void; to?: string; text: string; disabled?: boolean; variant?: ButtonVariant; loading?: boolean }) => {
   if (to) {
     return (
-      <ButtonLink variant={variant} to={!disabled && !loading && to} style={disabled && { opacity: 0.6 }}>
+      <ButtonLink variant={variant} to={!disabled && !loading && to} style={disabled && { opacity: 0.6 }} activeOpacity={1}>
         <>
           <LinkSmallBold style={variant === 'text' && { color: primary }}>{text}</LinkSmallBold>
           <AnimatedLoadingIndicator loading={loading} />

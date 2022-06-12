@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import { TextSmallBold } from './Text'
 import Svg, { Line, Path } from 'react-native-svg'
+import { useHandleBack } from '../hooks/use-handle-back'
 
 const TopBarContainer = styled.View`
   display: flex;
@@ -28,6 +29,7 @@ const Back = () => (
 
 export const TopBar = ({ isSettings }: { isSettings?: boolean }) => {
   const navigate = useNavigate()
+  useHandleBack(isSettings)
 
   return (
     <TopBarContainer>

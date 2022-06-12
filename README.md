@@ -9,14 +9,12 @@ Sends you push notifications when to put your bins out, lets you know when they'
     * backend
     * web app
     * website
-  * sort out push logic
   * publishing
     * push notification certs, etc.
     * eas update
     * privacy policy
 
 * V1 app/website
-  * icon/splash/etc
   * (web)app
     * bin details page
     * report missed collection

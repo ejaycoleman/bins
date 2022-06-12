@@ -17,6 +17,7 @@ import { Settings } from './routes/settings'
 import { PageTitle } from './components/PageTitle'
 import { Privacy } from './routes/privacy'
 import { LandingPage } from './routes/landing-page'
+import { PushTokenHandler } from './components/PushTokenHandler'
 
 const Redirect = () => {
   const { homeAddressId, loading } = useHomeAddressId()
@@ -72,6 +73,7 @@ export default function App() {
             <Route path="/privacy" element={<Privacy />} />
           </Routes>
           <PageTitle />
+          <PushTokenHandler />
         </Router>
       </ApolloProvider>
     </Containers>
