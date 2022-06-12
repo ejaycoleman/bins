@@ -4,23 +4,23 @@ Sends you push notifications when to put your bins out, lets you know when they'
 
 ## Todo
 
-* finish the app/website
-  * cog page
-    * reset app
-    * enable/disable push notifications
-    * privacy policy/contact us etc.
-  * every variant of BinCard
-  * android finishing touches
-  * web finishing touches
 * hosting
   * backend
-  * website
+  * web app
+
 * publishing
   * push notification certs, etc.
   * eas update
+  * privacy policy
 
-* complete app/website
-  * bin details page
-  * report missed collection
-  * push notification banner thing
-  * verify on android/web/ios
+* V1 app/website
+  * icon/splash/etc
+  * (web)app
+    * bin details page
+    * report missed collection
+    * push notification banner thing
+  * web
+    * push
+    * fix animation className hack
+  * verify app changes on android/web/ios
+  * basic website

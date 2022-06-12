@@ -17,6 +17,8 @@ const buttonStyles = css`
   border-radius: 12px;
   background-color: ${primary};
   color: ${primaryDark};
+  min-height: 56px;
+  max-width: 336px;
 
   :hover {
     background-color: ${primaryLight};
@@ -39,7 +41,7 @@ const ButtonContainer = styled.TouchableOpacity<{ variant: ButtonVariant }>`
   ${({ variant }) => buttonVariantStyles(variant)}
 `
 
-type ButtonVariant = 'primary' | 'text'
+export type ButtonVariant = 'primary' | 'text'
 
 const ButtonLink = styled(Link)<{ variant: ButtonVariant }>`
   ${buttonStyles}

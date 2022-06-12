@@ -1,6 +1,6 @@
 import { Arg, FieldResolver, Query, Resolver, Root } from 'type-graphql'
 import { addressLookup } from '@joshbalfour/canterbury-api'
-
+import { toNormalised } from 'postcode'
 import { Address } from '../entities/address'
 import { Bin } from '../entities/bin'
 import { AppDataSource } from '../data-source'
@@ -11,9 +11,14 @@ export class AddressLookupResolver {
   @Query(() => [Address])
   async addressLookup(@Arg('postcode') postcode: string): Promise<Omit<Address, 'bins'>[]> {
     const addressRepository = AppDataSource.getRepository(Address)
+    const normalizedPostcode = toNormalised(postcode)
+    if (!normalizedPostcode) {
+      throw new Error('Invalid postcode')
+    }
+
     let addresses = await addressRepository.find({
       where: {
-        postcode,
+        postcode: normalizedPostcode,
       },
     })
     if (!addresses.length){
@@ -50,20 +55,12 @@ export class AddressLookupResolver {
 
   @FieldResolver()
   async bins (@Root() address: Address): Promise<Bin[]> {
-    const binRepository = AppDataSource.getRepository(Bin)
-    let bins = await binRepository.find({
-      where: {
-        address: {
-          id: address.id,
-        }
-      },
-    })
-
-    if (bins.length) {
-      return bins
+    // if last updated over 24 hours ago, update the data
+    if (!address.lastUpdatedAt || Date.now() - address.lastUpdatedAt.getTime() > 24 * 60 * 60 * 1000) {
+      await updateAddressData(address)
     }
 
-    await updateAddressData(address)
+    const binRepository = AppDataSource.getRepository(Bin)
 
     return binRepository.find({
       where: {

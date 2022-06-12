@@ -1,16 +1,16 @@
-import { useParams, useNavigate } from 'react-router-native'
+import { useParams } from 'react-router-native'
 import styled from 'styled-components/native'
 import { useAddressLookupById, Bin as BinType } from '../hooks/use-address-lookup'
-import { Loading } from './loading'
 import { HugeBold, TextSmallBold } from '../components/Text'
 import React from 'react'
 import { Bin } from '../components/Bin'
-import { DateTime } from 'luxon'
 import { Outcome } from '@joshbalfour/canterbury-api/src'
 import Svg, { Path, Rect } from 'react-native-svg'
-import { RefreshControl, TouchableOpacity } from 'react-native'
-import { setHomeAddressId } from '../hooks/use-home-addressId'
+import { RefreshControl } from 'react-native'
 import { StepContainer } from './signup'
+import { AnimatedLoadingIndicator } from '../components/LoadingIndicator'
+import { TopBar } from '../components/TopBar'
+import { dayjs } from '../dayjs'
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -19,11 +19,12 @@ const Container = styled.SafeAreaView`
 `
 
 const getOutcomeColor = (outcome?: Outcome) => {
+  if (!outcome) return '#262338'
   switch (outcome) {
     case 'Collection Made':
       return '#067306'
     default:
-      return '#262338'
+      return '#FF75CB'
   }
 }
 
@@ -49,38 +50,29 @@ const TextContainer = styled.View`
   flex: 1;
 `
 
-const isToday = (someDate: Date) => {
-  const today = new Date()
+const formatDate = (date: Date) => {
+  if (dayjs(date).isToday()) return 'Today'
+  if (dayjs(date).isTomorrow()) return 'Tomorrow'
+  if (dayjs(date).isYesterday()) return 'Yesterday'
 
-  return someDate.getDate() == today.getDate() &&
-    someDate.getMonth() == today.getMonth() &&
-    someDate.getFullYear() == today.getFullYear()
-}
-
-const isTomorrow = (someDate: Date) => {
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1)
-
-  return someDate.getDate() == tomorrow.getDate() &&
-    someDate.getMonth() == tomorrow.getMonth() &&
-    someDate.getFullYear() == tomorrow.getFullYear()
+  return dayjs(date).format('EEEE')
 }
 
 const getBinText = ({ status, collections, isActive }: { status?: BinType['status']; collections: Date[]; isActive?: boolean }) => {
   if (isActive && status) {
-    // TODO - more of these
-    return `${status.outcome} at ${status.date}`
+    const dt = dayjs(status.date)
+    return `${status.outcome} ${formatDate(status.date)} at ${dt.format('HH:MM a')}`
   }
 
-  if (isToday(collections[0])) {
+  if (dayjs(collections[0]).isToday()) {
     return 'Today'
   }
-  if (isTomorrow(collections[0])) {
+  if (dayjs(collections[0]).isTomorrow()) {
     return 'Tomorrow'
   }
 
-  const nextCollection = DateTime.fromJSDate(collections[0])
-  return nextCollection.toRelative()
+  const nextCollection = dayjs(collections[0])
+  return nextCollection.fromNow()
 }
 
 const InfoIcon = () => (
@@ -96,7 +88,8 @@ const CheckIcon = () => (
 )
 
 const BinCard = ({ type, status, collections, isActive }: BinType & { isActive?: boolean }) => {
-  const collectionSoon = collections.length > 0 && DateTime.fromJSDate(collections[0]).diffNow().as('days') < 2
+  const collectionDateDiff = dayjs(collections[0]).diff(dayjs().add(2, 'days'), 'day')
+  const collectionSoon = collections.length > 0 && collectionDateDiff < 0
   const isReallyActive = isActive && !collectionSoon
 
   return (
@@ -127,22 +120,8 @@ const TopTextContainer = styled.View`
   flex-direction: column;
   padding-left: 9px;
 
-  margin-top: 34px;
-  margin-bottom: 57px;
+  margin-bottom: 24px;
 `
-
-const TopBar = styled.View`
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  padding-top: 25px;
-`
-
-const Cog = () => (
-  <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <Path fillRule="evenodd" clipRule="evenodd" d="M13.7155 1.86291C12.939 0.56694 11.061 0.566938 10.2844 1.8629L9.57865 3.04067C9.12576 3.79647 8.2316 4.16684 7.37693 3.95266L6.04507 3.6189C4.57956 3.25164 3.25164 4.57955 3.6189 6.04507L3.95266 7.37693C4.16684 8.2316 3.79647 9.12576 3.04067 9.57865L1.86291 10.2844C0.56694 11.061 0.566938 12.939 1.8629 13.7155L3.04067 14.4213C3.79647 14.8742 4.16684 15.7684 3.95266 16.623L3.6189 17.9549C3.25164 19.4204 4.57955 20.7483 6.04507 20.3811L7.37693 20.0473C8.2316 19.8331 9.12576 20.2035 9.57865 20.9593L10.2844 22.137C11.061 23.433 12.939 23.433 13.7155 22.1371L14.4213 20.9593C14.8742 20.2035 15.7684 19.8331 16.623 20.0473L17.9549 20.3811C19.4204 20.7483 20.7483 19.4204 20.3811 17.9549L20.0473 16.623C19.8331 15.7684 20.2035 14.8742 20.9593 14.4213L22.137 13.7155C23.433 12.939 23.433 11.061 22.1371 10.2844L20.9593 9.57865C20.2035 9.12576 19.8331 8.2316 20.0473 7.37693L20.3811 6.04507C20.7483 4.57956 19.4204 3.25164 17.9549 3.6189L16.623 3.95266C15.7684 4.16684 14.8742 3.79647 14.4213 3.04067L13.7155 1.86291ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79084 14.2091 7.99998 12 7.99998C9.79084 7.99998 7.99998 9.79084 7.99998 12C7.99998 14.2091 9.79084 16 12 16Z" fill="#FCFCFC"/>
-  </Svg>
-)
 
 const NotSupported = () => (
   <StepContainer style={{
@@ -156,32 +135,27 @@ const NotSupported = () => (
   </StepContainer>
 )
 
-const TopBarNav = () => {
-  const navigate = useNavigate()
+const LoadingContainer = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+`
 
-  return (
-    <TopBar>
-      <TextSmallBold style={{ flex: 1 }}>Bin App</TextSmallBold>
-      <TouchableOpacity style={{
-        position: 'absolute',
-        right: 16,
-        top: 28,
-      }} onPress={async () => {
-        await setHomeAddressId(undefined)
-        navigate('/')
-      }}>
-        <Cog />
-      </TouchableOpacity>
-    </TopBar>
-  )
-}
+const Loading = () => <LoadingContainer><AnimatedLoadingIndicator fill="white" loading style={{ right: '50%', marginRight: -21 }} size={42} /></LoadingContainer>
 
 export const Home = () => {
   const { addressId } = useParams()
   const { loading, address, refetch } = useAddressLookupById(addressId)
 
-  if (loading || !address) {
-    return <Loading />
+  if (loading) {
+    return (
+      <Container>
+        <TopBar />
+        <Loading />
+      </Container>
+    )
   }
 
   const { bins } = address
@@ -189,14 +163,15 @@ export const Home = () => {
   const activeBins = bins.filter(bin => {
     // collection is today or tomorrow
     const collectionIsTodayOrTomorrow = bin.collections.some(collection => {
-      return isToday(collection) || isTomorrow(collection)
+      const d = dayjs(collection)
+      return d.isToday() || d.isTomorrow()
     })
 
     if (bin.status) {
       // status is not "Collection Made"
       const collectionNotMade = bin.status.outcome !== 'Collection Made'
       // was collected today
-      const collectedToday = isToday(bin.status.date) && bin.status.outcome === 'Collection Made'
+      const collectedToday = dayjs(bin.status.date).isToday() && bin.status.outcome === 'Collection Made'
 
       return collectionIsTodayOrTomorrow || collectionNotMade || collectedToday
     }
@@ -208,7 +183,7 @@ export const Home = () => {
 
   return (
     <Container>
-      <TopBarNav />
+      <TopBar />
       <TopTextContainer>
         <TextSmallBold style={{ color: '#6E7191', textAlign: 'left' }}>Good Morning</TextSmallBold>
         <HugeBold style={{ textAlign: 'left' }}>{address.firstLine}</HugeBold>
@@ -220,7 +195,7 @@ export const Home = () => {
         {activeBins.map(bin => <BinCard isActive key={bin.id} {...bin} />)}
         {!!activeBins.length && <HugeBold style={{ marginTop: 58, marginBottom: 16, textAlign: 'left' }}>Coming up</HugeBold>}
         {inactiveBins.sort((a, b) => {
-          return DateTime.fromJSDate(a.collections[0]).diff(DateTime.fromJSDate(b.collections[0]))
+          return dayjs(a.collections[0]).diff(dayjs(b.collections[0]))
         }).map(bin => <BinCard key={bin.id} {...bin} />)}
       </BinsContainer>
     </Container>

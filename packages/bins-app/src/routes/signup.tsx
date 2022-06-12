@@ -7,7 +7,6 @@ import * as Notifications from 'expo-notifications'
 
 import { Button } from '../components/Button'
 import { TextInput } from '../components/Input'
-import { Logo } from '../components/Logo'
 import { HugeBold, TextSmall } from '../components/Text'
 import { useAddressLookup } from '../hooks/use-address-lookup'
 import { useEnableNotifications } from '../hooks/use-enable-notifications'
@@ -46,11 +45,6 @@ const Container = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-const SmallLogo = styled(Logo)`
-  width: 64px;
-  height: 64px;
-`
-
 const Body = styled.View`
   margin-top: 64px;
   margin-bottom: 24px;
@@ -85,6 +79,13 @@ const StyledPicker = styled(Picker)`
 
 const PickerContainer = styled.View`
   position: relative;
+
+  ${Platform.OS === 'android' ? css`
+    overflow: hidden;
+    border-radius: 15px;
+    background-color: #4E4B66;
+    padding-left: 8px;
+  ` : ''}
 `
 
 
@@ -101,7 +102,9 @@ const StyledStepContainer = styled.View`
 `
 
 const SCContainer = styled.View`
-  flex: 1;
+  ${Platform.OS === 'web' ? css`
+    padding-bottom: 24px;
+  ` : css`flex: 1;`}
 `
 
 export const StepContainer = ({ children, style }: { children: React.ReactNode; style?: any }) => (
@@ -115,12 +118,21 @@ export const StepContainer = ({ children, style }: { children: React.ReactNode; 
 export const Step1 = () => {
   const [postcode, setPostcode] = useState('')
   const postcodeValid = postcodeValidator(postcode, 'GB')
+  const navigate = useNavigate()
 
   return (
     <Body>
       <StepContainer>
         <TextSmall style={{ marginBottom: 21 }}>Enter your postcode</TextSmall>
-        <TextInput autoFocus style={{ width: 303 }} name="postcode" placeholder="e.g. E2 7DG" autoCorrect={false} autoComplete="postcode" value={postcode} onChangeText={setPostcode} />
+        <TextInput onSubmitEditing={e => {
+          e.preventDefault()
+          e.stopPropagation()
+          if (postcodeValid) {
+            navigate(`/signup/postcode/${postcode}`)
+          }
+        }} autoFocus style={{ width: 303 }} name="postcode" placeholder="e.g. E2 7DG" autoCorrect={false} autoComplete="postcode" value={postcode} onChangeText={text => {
+          setPostcode(text.trim())
+        }} />
       </StepContainer>
       <Footer>
         <Button text={"Continue"} disabled={!postcodeValid} to={`/signup/postcode/${postcode}`} />
@@ -163,19 +175,18 @@ export const Step2 = () => {
               <Picker.Item label={address.formatted} value={address.id} key={address.id} />
             ))}
           </StyledPicker>
-          {Platform.OS === 'web' && (
+          {Platform.OS === 'web' && !loading && (
             <Indicator>
               <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <Path d="M19 9L12.0368 15.9632L5.07366 9" stroke="#D9DBE9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <Path d="M19 9L12.0368 15.9632L5.07366 9" stroke="#D9DBE9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </Svg>
             </Indicator>
           )}
-          <AnimatedLoadingIndicator loading={loading} size={64} style={{
+          <AnimatedLoadingIndicator loading={loading} style={{
             position: 'absolute',
-            left: '50%',
-            marginTop: -7,
-            marginLeft: -32,
-          }} />
+            top: 12,
+            right: 12,
+          }} fill="#D9DBE9" />
         </PickerContainer>
       </StepContainer>
 
@@ -205,11 +216,11 @@ export const Step3 = () => {
         <TextSmall style={{ marginBottom: 21 }}>Turn on push notifications</TextSmall>
         <ButtonContainer>
           <Button loading={loading} text={"Turn On"} onClick={async () => {
+            navigate('/') // fetch tokens asyncronously as sometimes this can take a while
             const expoPushToken = await Notifications.getExpoPushTokenAsync({
               experienceId: '@joshbalfour/bins',
             })
             await enableNotifications(expoPushToken.data)
-            navigate('/')
           }} />
         </ButtonContainer>
       </StepContainer>
@@ -226,7 +237,7 @@ export const Step3 = () => {
   )
 }
 
-const LogoContainer = styled.View`
+const TitleContainer = styled.View`
   flex-direction: row;
   align-items: center;
   margin-bottom: 12px;
@@ -236,9 +247,9 @@ export const Signup = () => {
   return (
     <Container>
       <Header>
-        <LogoContainer>
+        <TitleContainer>
           <HugeBold style={{ marginTop: 16, marginBottom: 16, flex: 1, textAlign: 'center' }}>Bins App</HugeBold>
-        </LogoContainer>
+        </TitleContainer>
         <TextSmall>
           Get reminded when to put your bins out, and when to get them back.
         </TextSmall>

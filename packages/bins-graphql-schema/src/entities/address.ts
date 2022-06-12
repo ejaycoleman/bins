@@ -34,6 +34,10 @@ export class Address {
   @Column({ nullable: true })
   @Field({ nullable: true })
   binRegion?: string
+  
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  lastUpdatedAt?: Date
 
   @ManyToMany(() => Device, (device) => device.address)
   devices?: Device[]

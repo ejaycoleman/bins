@@ -31,7 +31,7 @@ export const updateAddressData = async (address: Address) => {
   const statuses: BinStatus[] = []
   const collections: BinCollection[] = []
 
-  const storableBins = collectionDates.map((collectionDate) => {
+  const storableBins = await Promise.all(collectionDates.map(async (collectionDate) => {
     const cd = binRepository.create({
       id: collectionDate.id,
       type: collectionDate.type,
@@ -52,7 +52,7 @@ export const updateAddressData = async (address: Address) => {
     })
     collections.push(...collectionDates)
     return cd
-  })
+  }))
 
   const bins = await binRepository.save(storableBins)
   // get current status for each bin
@@ -78,6 +78,10 @@ export const updateAddressData = async (address: Address) => {
   await binCollectionRepository.save(collections)
 
   const changedStatuses = diffStatuses(bins, currentStatuses, newStatuses)
+
+  await AppDataSource.getRepository(Address).update(address.id, {
+    lastUpdatedAt: new Date(),
+  })
 
   return {
     changedStatuses,

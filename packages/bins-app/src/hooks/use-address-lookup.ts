@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client"
 import { BinType, Outcome } from "@joshbalfour/canterbury-api/src"
 
-type Address = {
+export type Address = {
   id: string
   formatted: string
   postcode: string
