@@ -4,14 +4,16 @@ Sends you push notifications when to put your bins out, lets you know when they'
 
 ## Todo
 
-* hosting
-  * backend
-  * web app
-
-* publishing
-  * push notification certs, etc.
-  * eas update
-  * privacy policy
+* MVP
+  * hosting
+    * backend
+    * web app
+    * website
+  * sort out push logic
+  * publishing
+    * push notification certs, etc.
+    * eas update
+    * privacy policy
 
 * V1 app/website
   * icon/splash/etc

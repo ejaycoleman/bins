@@ -85,6 +85,13 @@ const ResetButton = ({ text, variant = 'primary' }: { text:string; variant: Butt
 
   return (
     <Button text={text} variant={variant} loading={loading} onClick={async () => {
+      if (Platform.OS === 'web') {
+        if (confirm('Are you sure?')) {
+          await disable()
+          await setHomeAddressId(undefined)
+          navigate('/')
+        }
+      }
       Alert.alert(text, 'Are you sure?', [
         {
           text: 'Cancel',

@@ -128,7 +128,7 @@ const NotSupported = () => (
     alignSelf: 'center'
   }}>
     <Svg width="34" height="34" viewBox="0 0 34 34" fill="none" style={{ marginBottom: 24 }}>
-      <Rect x="2" y="17.0754" width="21.3199" height="21.3199" transform="rotate(-45 2 17.0754)" stroke="#6E7191" stroke-width="2"/>
+      <Rect x="2" y="17.0754" width="21.3199" height="21.3199" transform="rotate(-45 2 17.0754)" stroke="#6E7191" strokeWidth="2"/>
     </Svg>
     <TextSmallBold>We don't support your area yet, but we will soon!</TextSmallBold>
     <TextSmallBold style={{ marginTop: 12 }}>You'll get bin collection notifications automatically when we do.</TextSmallBold>
@@ -144,6 +144,16 @@ const LoadingContainer = styled.View`
 `
 
 const Loading = () => <LoadingContainer><AnimatedLoadingIndicator fill="white" loading style={{ right: '50%', marginRight: -21 }} size={42} /></LoadingContainer>
+
+const timeOfDay = () => {
+  const hour = dayjs().hour()
+
+  if (hour >= 6 && hour < 12) return 'Morning'
+  if (hour >= 12 && hour < 18) return 'Afternoon'
+  if (hour >= 18 && hour < 24) return 'Evening'
+
+  return 'Night'
+}
 
 export const Home = () => {
   const { addressId } = useParams()
@@ -185,7 +195,7 @@ export const Home = () => {
     <Container>
       <TopBar />
       <TopTextContainer>
-        <TextSmallBold style={{ color: '#6E7191', textAlign: 'left' }}>Good Morning</TextSmallBold>
+        <TextSmallBold style={{ color: '#6E7191', textAlign: 'left' }}>Good {timeOfDay()}</TextSmallBold>
         <HugeBold style={{ textAlign: 'left' }}>{address.firstLine}</HugeBold>
       </TopTextContainer>
       <BinsContainer

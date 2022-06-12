@@ -16,6 +16,7 @@ import { Home } from './routes/home'
 import { Settings } from './routes/settings'
 import { PageTitle } from './components/PageTitle'
 import { Privacy } from './routes/privacy'
+import { LandingPage } from './routes/landing-page'
 
 const Redirect = () => {
   const { homeAddressId, loading } = useHomeAddressId()
@@ -27,8 +28,6 @@ const Redirect = () => {
     }
     if (homeAddressId) {
       navigate(`/home/${homeAddressId}`)
-    } else {
-      navigate('/signup')
     }
   }, [homeAddressId, loading])
 
@@ -36,7 +35,7 @@ const Redirect = () => {
     return <Loading />
   }
 
-  return null
+  return <LandingPage />
 }
 
 export default function App() {

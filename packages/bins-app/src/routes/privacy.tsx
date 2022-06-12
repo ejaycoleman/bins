@@ -13,7 +13,7 @@ Last updated: June 12, 2022
 
 This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.
 
-We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the [Free Privacy Policy Generator](https://www.freeprivacypolicy.com/free-privacy-policy-generator/).
+We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy.
 
 Interpretation and Definitions
 ==============================
@@ -61,7 +61,7 @@ Types of Data Collected
 
 While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:
 
-*   Address, State, Province, ZIP/Postal code, City
+*   Address, County, Postal code, City
     
 *   Usage Data
     
@@ -177,7 +177,7 @@ Contact Us
 
 If you have any questions about this Privacy Policy, You can contact us:
 
-*   By visiting this page on our website: [https://bins.joshbalfour.co.uk](https://bins.joshbalfour.co.uk)
+*   By emailing us from the settings page
 `
 
 const Container = styled.SafeAreaView`
