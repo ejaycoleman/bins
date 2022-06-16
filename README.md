@@ -5,10 +5,9 @@ Notifies when to put your bins out, when they're collected, and lets you report 
 ## Todo
 
 * MVP
-  * hosting
-    * backend
-    * web app
-    * website
+  * testflight proper
+  * verify expo update
+  * test push notifs
 
 * V1 app/website
   * (web)app
