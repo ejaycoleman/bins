@@ -6,12 +6,14 @@
     "build": "tsc"
   },
   "devDependencies": {
+    "@types/cron": "^2.0.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.5"
   },
   "main": "src/index.ts",
   "dependencies": {
     "@joshbalfour/bins-graphql-schema": "workspace:^",
+    "cron": "^2.0.0",
     "luxon": "^2.4.0"
   }
 }
