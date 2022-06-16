@@ -12,7 +12,6 @@ services:
       DB_USER: root
       DB_PASSWORD: bins
       DB_DATABASE: bins
-      EXPO_ACCESS_TOKEN: "asdfg"
 
   graphql:
     extends:
@@ -35,6 +34,15 @@ services:
       PORT: 4020
     depends_on:
       - db
+
+  website:
+    volumes:
+      - .:/src
+    image: node:16-alpine
+    working_dir: /src/packages/bins-app
+    command: "yarn web"
+    ports:
+      - "4030:19006"
 
   db:
     image: mariadb:10.5.8
