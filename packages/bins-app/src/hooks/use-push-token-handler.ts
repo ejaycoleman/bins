@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { useEnableNotifications } from './use-enable-notifications'
 import { useHomeAddressId } from './use-home-addressId'
+import { Platform } from 'react-native'
 
 const namespace = 'binsapp'
 const pushTokenKey = `${namespace}:pushToken2`
@@ -23,6 +24,9 @@ export const getRemotePushToken = async (): Promise<string | undefined> => {
     return pushToken
   }
 
+  if (Platform.OS === 'web') {
+    return undefined
+  }
   const expoPushToken = await Notifications.getExpoPushTokenAsync({
     experienceId: '@joshbalfour/bins',
   })
