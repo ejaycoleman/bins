@@ -4,6 +4,12 @@ import { getSchema } from '@joshbalfour/bins-graphql-schema'
 const go = async () => {
   const schema = await getSchema()
   const server = new ApolloServer({
+    cors: {
+      origin: [
+        'https://studio.apollographql.com',
+        'https://bins.joshbalfour.co.uk'
+      ]
+    },
     schema,
     formatError: (error) => {
       console.error(JSON.stringify(error, null, 2))
