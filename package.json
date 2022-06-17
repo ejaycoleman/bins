@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "resolutions": {
-    "type-graphql@1.1.1": "patch:type-graphql@npm:1.1.1#.yarn/patches/type-graphql-npm-1.1.1-82668f6e3f"
+    "type-graphql@1.1.1": "patch:type-graphql@npm:1.1.1#.yarn/patches/type-graphql-npm-1.1.1-82668f6e3f",
+    "ts-invariant@^0.4.0": "^0.10.3"
   }
 }
