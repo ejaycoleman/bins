@@ -117,8 +117,8 @@ export default function App() {
             marginLeft: -16
           }} />
           <TextSmallBold style={{ marginTop: 16 }}>
-            {checkingForUpdates && 'Checking for updates...'}
-            {isUpdating && 'Updating...'}
+            {checkingForUpdates && 'Checking for data...'}
+            {isUpdating && 'Downloading additional data...'}
           </TextSmallBold>
         </LoadingContainer>
       </Containers>
