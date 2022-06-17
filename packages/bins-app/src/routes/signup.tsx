@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Route, Routes, useNavigate, useParams } from 'react-router'
 import styled, { css } from 'styled-components/native'
 import { postcodeValidator } from 'postcode-validator'
 import { Picker } from '@react-native-picker/picker'
 
 import { Button } from '../components/Button'
-import { TextInput } from '../components/Input'
+import { TextInput, TextInputType } from '../components/Input'
 import { HugeBold, TextSmall } from '../components/Text'
 import { useAddressLookup } from '../hooks/use-address-lookup'
 import { useHomeAddressId } from '../hooks/use-home-addressId'
@@ -118,6 +118,13 @@ export const Step1 = () => {
   const [postcode, setPostcode] = useState('')
   const postcodeValid = postcodeValidator(postcode, 'GB')
   const navigate = useNavigate()
+  const ref = useRef<TextInputType>()
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.focus()
+    }
+  }, [ref.current])
 
   return (
     <Body>
@@ -129,7 +136,7 @@ export const Step1 = () => {
           if (postcodeValid) {
             navigate(`/signup/postcode/${postcode}`)
           }
-        }} autoFocus style={{ width: 303 }} name="postcode" placeholder="e.g. E2 7DG" autoCorrect={false} autoComplete="postcode" value={postcode} onChangeText={text => {
+        }} ref={ref} style={{ width: 303 }} name="postcode" placeholder="e.g. E2 7DG" autoCorrect={false} autoComplete="postcode" value={postcode} onChangeText={text => {
           setPostcode(text.trim())
         }} />
       </StepContainer>

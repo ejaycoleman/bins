@@ -2,6 +2,8 @@ import styled from 'styled-components/native'
 import { body, line, offWhite } from '../colors'
 import { textSmallStyles } from './Text'
 
+export { TextInput as TextInputType } from 'react-native'
+
 export const TextInput = styled.TextInput.attrs({
   placeholderTextColor: line,
 })`
