@@ -18,14 +18,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.joshbalfour.bins"
+      "bundleIdentifier": "com.joshbalfour.bins",
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.joshbalfour.bins"
+      "package": "com.joshbalfour.bins",
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"

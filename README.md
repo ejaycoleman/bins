@@ -1,21 +1,28 @@
-# Bins Notifier
+# Bin Notifier
 
-Notifies when to put your bins out, when they're collected, and lets you report when they weren't collected.
+Know when to put your bins out, when they're collected, report missed collection.
+
+Select your address and 
 
 ## Todo
 
 * MVP
-  * testflight proper
   * verify expo update
   * test push notifs
+  * testflight/test android proper
+
+* TEST
 
 * V1 app/website
+  * store presence
   * (web)app
     * bin details page
     * report missed collection
     * push notification banner thing
+    * pull to refresh not working on web
   * web
     * push
     * fix animation className hack
   * verify app changes on android/web/ios
-  * basic website
+
+* optimise deployment(?)
