@@ -53,8 +53,8 @@ export const collectionNextDay = async () => {
 
     pushNotifications.push({
       device,
-      title: `You have ${binTypes.length} collection${binTypes.length > 1 ? 's' : ''} tomorrow.`,
-      body: `Remember to put out your ${listToHuman(binTypes)} bins`,
+      title: `${binTypes.length} bin collection${binTypes.length > 1 ? 's' : ''} are tomorrow`,
+      body: `Remember to put out your ${listToHuman(binTypes)} bins tonight.`,
     })
   })
 

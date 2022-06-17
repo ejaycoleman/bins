@@ -4,6 +4,7 @@ import { AppDataSource } from '../data-source'
 import { Bin, ReportMissedCollection } from '../entities/bin'
 import { BinStatus } from '../entities/bin-status'
 import { reportMissedCollection } from '../mappers/report-missed-collection'
+import dayjs from 'dayjs'
 
 @Resolver(Bin)
 export class BinResolver {
@@ -29,9 +30,10 @@ export class BinResolver {
 
   @FieldResolver()
   status(@Root() bin: Bin): BinStatus {
-    return bin.statusHistory.sort((a, b) => {
-      return b.date > a.date ? -1 : 1
-    })[0]
+    const statuses = bin.statusHistory.sort((a, b) => {
+      return dayjs(a.date).isBefore(b.date) ? 1 : -1
+    })
+    return statuses[0]
   }
 
   @FieldResolver()

@@ -89,8 +89,9 @@ const CheckIcon = () => (
 
 const BinCard = ({ type, status, collections, isActive }: BinType & { isActive?: boolean }) => {
   const collectionDateDiff = dayjs(collections[0]).diff(dayjs().add(2, 'days'), 'day')
+  const collectedToday = dayjs(collections[0]).isToday()
   const collectionSoon = collections.length > 0 && collectionDateDiff < 0
-  const isReallyActive = isActive && !collectionSoon
+  const isReallyActive = isActive && (!collectionSoon || collectedToday)
 
   return (
     <BinCardContainer outcome={isReallyActive && status?.outcome}>
