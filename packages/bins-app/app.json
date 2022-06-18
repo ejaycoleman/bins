@@ -33,10 +33,20 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      [
-        "expo-notifications",
-        {}
+      "sentry-expo",
+      ["expo-notifications", {}]
+    ],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "sentry",
+            "project": "bin-notifier",
+            "url": "https://sentry.joshbalfour.co.uk"
+          }
+        }
       ]
-    ]
+    }
   }
 }

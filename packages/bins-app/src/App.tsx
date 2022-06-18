@@ -20,6 +20,13 @@ import { Privacy } from './routes/privacy'
 import { LandingPage } from './routes/landing-page'
 import { PushTokenHandler } from './components/PushTokenHandler'
 import { TextSmallBold } from './components/Text'
+import * as Sentry from 'sentry-expo'
+
+Sentry.init({
+  dsn: "https://bfafe20b546448759a66a6edb1df8b83@sentry.joshbalfour.co.uk/2",
+  enableInExpoDevelopment: true,
+  debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+})
 
 const Redirect = () => {
   const { homeAddressId, loading } = useHomeAddressId()
@@ -77,7 +84,7 @@ const LoadingContainer = styled.View`
   align-items: center;
 `
 
-export default function App() {
+const App = () => {
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_600SemiBold,
@@ -90,8 +97,6 @@ export default function App() {
       NavigationBar.setBackgroundColorAsync(offBlack)
     }
   }, [])
-
- 
 
   if (!fontsLoaded) {
     return (
@@ -144,6 +149,8 @@ export default function App() {
     </Containers>
   )
 }
+
+export default App
 
 const Containers = ({ children }: { children: any }) => (
   <View style={styles.container}>
