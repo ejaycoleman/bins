@@ -64,14 +64,15 @@ const getBinText = ({ status, collections, isActive }: { status?: BinType['statu
     return `${status.outcome} ${formatDate(status.date)} at ${dt.format('HH:MM a')}`
   }
 
-  if (dayjs(collections[0]).isToday()) {
+  const nextCollection = dayjs(collections.filter(c => dayjs(c).isAfter(dayjs()))[0])
+
+  if (nextCollection.isToday()) {
     return 'Today'
   }
-  if (dayjs(collections[0]).isTomorrow()) {
+  if (nextCollection.isTomorrow()) {
     return 'Tomorrow'
   }
 
-  const nextCollection = dayjs(collections[0])
   return nextCollection.fromNow()
 }
 
@@ -206,7 +207,11 @@ export const Home = () => {
         {activeBins.map(bin => <BinCard isActive key={bin.id} {...bin} />)}
         {!!activeBins.length && <HugeBold style={{ marginTop: 58, marginBottom: 16, textAlign: 'left' }}>Coming up</HugeBold>}
         {inactiveBins.sort((a, b) => {
-          return dayjs(a.collections[0]).diff(dayjs(b.collections[0]))
+          const aDates = a.collections.filter(d => dayjs(d).isAfter(new Date()))
+          const bDates = b.collections.filter(d => dayjs(d).isAfter(new Date()))
+          const aNextCollection = dayjs(aDates[0])
+          const bNextCollection = dayjs(bDates[0])
+          return aNextCollection.diff(bNextCollection)
         }).map(bin => <BinCard key={bin.id} {...bin} />)}
       </BinsContainer>
     </Container>

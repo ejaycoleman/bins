@@ -16,19 +16,24 @@ export class NotificationResolver {
       },
       relations: ['devices'],
     })
-    const existing = await deviceRepository.findOne({
+    let device = await deviceRepository.findOne({
       where: {
         token,
       },
     })
-    if (existing) {
-      return existing
+    if (!device) {
+      device = await deviceRepository.save(
+        deviceRepository.create({
+          token,
+        })
+      )
     }
-    const d = deviceRepository.create({
-      token,
-    })
-    address.devices = [...(address.devices || []), d]
-    const device = await deviceRepository.save(d)
+    if (!address.devices?.some(d => d.id === d.id)) {
+      address.devices = [
+        ...(address.devices || []),
+        device,
+      ]
+    }
     await addressRepository.save(address)
 
     return device

@@ -7,14 +7,13 @@ Select your address and
 ## Todo
 
 * MVP
-  * verify expo update
   * test push notifs
+  * store presence
   * testflight/test android proper
 
 * TEST
 
 * V1 app/website
-  * store presence
   * (web)app
     * bin details page
     * report missed collection
