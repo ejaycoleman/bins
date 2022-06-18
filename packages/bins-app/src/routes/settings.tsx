@@ -9,7 +9,6 @@ import { Button, ButtonVariant } from '../components/Button'
 import { useEnableNotifications } from '../hooks/use-enable-notifications'
 import { Alert, Linking, Platform, ScrollView, Share } from 'react-native'
 import { useDownloadData } from '../hooks/use-download-data'
-import { useHandleBack } from '../hooks/use-handle-back'
 import { getRemotePushToken, persistPushToken } from '../hooks/use-push-token-handler'
 
 const Container = styled.SafeAreaView`
