@@ -136,7 +136,7 @@ export const Step1 = () => {
           if (postcodeValid) {
             navigate(`/signup/postcode/${postcode}`)
           }
-        }} ref={ref} style={{ width: 303 }} name="postcode" placeholder="e.g. E2 7DG" autoCorrect={false} autoComplete="postcode" value={postcode} onChangeText={text => {
+        }} ref={ref} style={{ width: 303 }} name="postcode" placeholder="e.g. E2 7DG" autoCorrect={false} autoComplete="postal-code" value={postcode} onChangeText={text => {
           setPostcode(text.trim())
         }} />
       </StepContainer>
