@@ -63,12 +63,18 @@ const useUpdater = () => {
         if (isAvailable) {
           setIsUpdating(true)
           return Updates.fetchUpdateAsync()
-            .then(() => {
-              setIsUpdating(false)
+            .then(Updates.reloadAsync)
+            .catch(e => {
+              Sentry.Native.captureException(e)
+              console.error(e)
               Updates.reloadAsync()
             })
         }
-      }).catch(console.error)
+      }).catch((e) => {
+        setCheckingForUpdates(false)
+        Sentry.Native.captureException(e)
+        console.error(e)
+      })
   }, [])
 
   return {
