@@ -13,8 +13,6 @@ const isIt5pm = () => {
 
 const go = async () => {
   console.log('worker started')
-  await initializeDataSource()
-  
   await updateAllData()
   await processNotificationReceipts()
   
@@ -24,13 +22,23 @@ const go = async () => {
   console.log('worker finished')
 }
 
-new CronJob(
-	'1 * * * *',
-	function() {
-		console.log('cron initiated')
-    go().catch(console.error)
-	},
-	null,
-	true,
-	'Europe/London'
-)
+const init = async () => {
+  console.log('initialising data source')
+  await initializeDataSource()
+  console.log('done initialising data source')
+
+  console.log('initialising cron job')
+  new CronJob(
+    '1 * * * *',
+    function() {
+      console.log('cron initiated')
+      go().catch(console.error)
+    },
+    null,
+    true,
+    'Europe/London'
+  )
+  console.log('done initialising cron job')
+}
+
+init().catch(console.error)
