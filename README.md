@@ -7,7 +7,6 @@ Select your address and
 ## Todo
 
 * MVP
-  * test push notifs
   * store presence
   * testflight/test android proper
 
