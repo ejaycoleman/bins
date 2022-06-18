@@ -2,7 +2,8 @@
 
 Know when to put your bins out, when they're collected, report missed collection.
 
-Select your address and 
+Select your address and we'll remind you to put your bins out, and when they're collected.
+On collection day, let us know if they weren't collected and we'll inform the council.
 
 ## Todo
 
