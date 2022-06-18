@@ -27,11 +27,22 @@ export const getRemotePushToken = async (): Promise<string | undefined> => {
   if (Platform.OS === 'web') {
     return undefined
   }
-  const expoPushToken = await Notifications.getExpoPushTokenAsync({
-    experienceId: '@joshbalfour/bins',
-  })
-  await persistPushToken(expoPushToken.data)
-  return expoPushToken.data
+
+  const permission = await Notifications.getPermissionsAsync()
+  if (permission.status !== 'granted') {
+    return undefined
+  }
+
+  try {
+    const expoPushToken = await Notifications.getExpoPushTokenAsync({
+      experienceId: '@joshbalfour/bins',
+    })
+    await persistPushToken(expoPushToken.data)
+    return expoPushToken.data
+  } catch (e) {
+    console.error(e)
+    return undefined
+  }
 }
 
 export const usePushTokenHandler = () => {
