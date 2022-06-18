@@ -7,7 +7,8 @@ const go = async () => {
     cors: {
       origin: [
         'https://studio.apollographql.com',
-        'https://bins.joshbalfour.co.uk'
+        'https://bins.joshbalfour.co.uk',
+        'http://localhost:19006',
       ]
     },
     schema,
