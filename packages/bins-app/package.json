@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "build:web": "expo build:web",
-    "publish": "source .env && expo publish"
+    "publish": "expo publish"
   },
   "postinstall": "expo-yarn-workspaces",
   "dependencies": {
