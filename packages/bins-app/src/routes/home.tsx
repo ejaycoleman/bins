@@ -73,7 +73,19 @@ const getBinText = ({ status, collections, isActive }: { status?: BinType['statu
     return 'Tomorrow'
   }
 
-  return nextCollection.fromNow()
+  // TODO: not sure which option here will be best
+
+  // if (nextCollection.isBefore(dayjs().add(1, 'week'))) {
+  //   return `This ${nextCollection.format('dddd')}`
+  // }
+  if (nextCollection.isAfter(dayjs().add(1, 'week'))) {
+    return `Next ${nextCollection.format('dddd')}`
+  }
+
+  const inNdays = nextCollection.from(dayjs().startOf('day'))
+  // capitalise first letter
+  // return inNdays.charAt(0).toUpperCase() + inNdays.slice(1)
+  return inNdays
 }
 
 const InfoIcon = () => (
