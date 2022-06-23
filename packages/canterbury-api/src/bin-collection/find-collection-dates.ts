@@ -16,6 +16,18 @@ const statusIsError = (status: BinStatus<string> | BackendError): status is Back
   return (status as BackendError).errorType !== undefined
 }
 
+export const coversAddress = async (uprn: string, usrn: string) : Promise<boolean> => {
+  const res = await fetch('https://zbr7r13ke2.execute-api.eu-west-2.amazonaws.com/Beta/get-bin-dates', {
+    headers: defaultHeaders,
+    body: JSON.stringify({ uprn, usrn }),
+    method: 'POST'
+  })
+  const json = await res.json() as BinDatesAPIResponse
+  const dates = JSON.parse(json.dates) as BinDates<string>
+
+  return !!dates.blackBinDay.length
+}
+
 export const findCollectionDates = async (uprn: string, usrn: string): Promise<CollectionDates> => {
   const res = await fetch('https://zbr7r13ke2.execute-api.eu-west-2.amazonaws.com/Beta/get-bin-dates', {
     headers: defaultHeaders,

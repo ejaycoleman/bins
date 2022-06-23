@@ -4,13 +4,13 @@ import { useAddressLookupById, Bin as BinType } from '../hooks/use-address-looku
 import { HugeBold, TextSmallBold } from '../components/Text'
 import React from 'react'
 import { Bin } from '../components/Bin'
-import { Outcome } from '@joshbalfour/canterbury-api/src'
 import Svg, { Path, Rect } from 'react-native-svg'
 import { RefreshControl } from 'react-native'
 import { StepContainer } from './signup'
 import { AnimatedLoadingIndicator } from '../components/LoadingIndicator'
 import { TopBar } from '../components/TopBar'
 import { dayjs } from '../dayjs'
+import { Outcome } from '@joshbalfour/bins-types'
 
 const Container = styled.SafeAreaView`
   flex: 1;

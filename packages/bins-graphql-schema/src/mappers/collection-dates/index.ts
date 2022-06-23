@@ -1,32 +1,43 @@
 import { AppDataSource } from "../../data-source"
-import { Address } from "../../entities/address"
+import { Address, BinRegion } from "../../entities/address"
 
 import * as canterbury from './canterbury'
+import * as basingstoke from './basingstoke'
+import { CollectionDates } from "./types"
 
-export const findCollectionDates = async (address: Address) => {
+const findBinRegion = async (address: Address): Promise<BinRegion | undefined> => {
+  try {
+    const regionIsCanterbury = await canterbury.coversAddress(address)
+    if (regionIsCanterbury) {
+      return 'canterbury'
+    }
+  } catch (e) {
+    // not supported
+  }
+
+  try {
+    const regionIsBasingstoke = await basingstoke.coversAddress(address)
+    if (regionIsBasingstoke) {
+      return 'basingstoke'
+    }
+  } catch (e) {
+    // not supported
+  }
+}
+
+export const findCollectionDates = async (address: Address): Promise<CollectionDates[]> => {
   if (!address.binRegion) {
-    // try all
-    try {
-      const collectionDates = await canterbury.getCollectionDates(address)
-      if (collectionDates) {
-        await AppDataSource.getRepository(Address).update(address.id, {
-          binRegion: 'canterbury',
-        })
-        return collectionDates
-      }
-    } catch (e) {
-      // not supported
-    }
+    const binRegion = await findBinRegion(address)
+    address.binRegion = binRegion
+    await AppDataSource.getRepository(Address).save(address)
   }
 
-  if (address.binRegion) {
-    if (address.binRegion === 'canterbury') {
-      const collectionDates = await canterbury.getCollectionDates(address)
-      if (collectionDates) {
-        return collectionDates
-      }
-    }
+  switch (address.binRegion) {
+    case 'canterbury':
+      return canterbury.getCollectionDates(address)
+    case 'basingstoke':
+      return basingstoke.getCollectionDates(address)
+    default:
+      return []
   }
-
-  return []
 }

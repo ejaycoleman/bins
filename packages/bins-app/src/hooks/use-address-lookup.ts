@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client"
-import { BinType, Outcome } from "@joshbalfour/canterbury-api/src"
+import { BinType, Outcome } from "@joshbalfour/bins-types"
 
 export type Address = {
   id: string

@@ -1,6 +1,7 @@
-import { BinType } from '@joshbalfour/canterbury-api'
+import { BinType } from '@joshbalfour/bins-types'
 import { Field, GraphQLISODateTime, ID, ObjectType } from 'type-graphql'
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm'
+
 import { Address } from './address'
 import { BinCollection } from './bin-collection'
 import { BinStatus } from './bin-status'

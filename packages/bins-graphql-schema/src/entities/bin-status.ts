@@ -1,4 +1,4 @@
-import { Outcome } from "@joshbalfour/canterbury-api"
+import { Outcome } from "@joshbalfour/bins-types"
 import { Field, GraphQLISODateTime, ID, ObjectType } from "type-graphql"
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm"
 import { Bin } from "./bin"

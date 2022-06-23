@@ -13,6 +13,8 @@
   },
   "main": "src/index.ts",
   "dependencies": {
+    "@joshbalfour/basingstoke-api": "workspace:^",
+    "@joshbalfour/bins-types": "workspace:^",
     "@joshbalfour/canterbury-api": "workspace:^",
     "class-validator": "^0.13.2",
     "expo-server-sdk": "^3.6.0",
