@@ -3,26 +3,29 @@ import { Address, BinRegion } from "../../entities/address"
 
 import * as canterbury from './canterbury'
 import * as basingstoke from './basingstoke'
+import * as birmingham from './birmingham'
+
 import { CollectionDates } from "./types"
 
-const findBinRegion = async (address: Address): Promise<BinRegion | undefined> => {
+const returnOrFail = async (region: BinRegion, fn: () => Promise<boolean>) => {
   try {
-    const regionIsCanterbury = await canterbury.coversAddress(address)
-    if (regionIsCanterbury) {
-      return 'canterbury'
+    const result = await fn()
+    if (result) {
+      return region
     }
   } catch (e) {
-    // not supported
+    return undefined
   }
+}
 
-  try {
-    const regionIsBasingstoke = await basingstoke.coversAddress(address)
-    if (regionIsBasingstoke) {
-      return 'basingstoke'
-    }
-  } catch (e) {
-    // not supported
-  }
+const findBinRegion = async (address: Address): Promise<BinRegion | undefined> => {
+  const res = await Promise.all([
+    returnOrFail('canterbury', () => canterbury.coversAddress(address)),
+    returnOrFail('basingstoke', () => basingstoke.coversAddress(address)),
+    returnOrFail('birmingham', () => birmingham.coversAddress(address)),
+  ])
+
+  return res.filter(birmingham.notEmpty)[0]
 }
 
 export const findCollectionDates = async (address: Address): Promise<CollectionDates[]> => {
@@ -37,6 +40,8 @@ export const findCollectionDates = async (address: Address): Promise<CollectionD
       return canterbury.getCollectionDates(address)
     case 'basingstoke':
       return basingstoke.getCollectionDates(address)
+    case 'birmingham':
+      return birmingham.getCollectionDates(address)
     default:
       return []
   }

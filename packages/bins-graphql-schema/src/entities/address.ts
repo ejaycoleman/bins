@@ -4,7 +4,7 @@ import { Column, Entity, Index, ManyToMany, OneToMany, PrimaryGeneratedColumn } 
 import { Bin } from './bin'
 import { Device } from './device'
 
-export type BinRegion = 'canterbury' | 'basingstoke'
+export type BinRegion = 'canterbury' | 'basingstoke' | 'birmingham'
 
 @ObjectType()
 @Entity()

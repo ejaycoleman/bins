@@ -1,5 +1,6 @@
-import { BinType, binTypes, CollectionDates, coversAddress as canterburyCoversAddress, findCollectionDates } from "@joshbalfour/canterbury-api"
+import { BinType, binTypes, CollectionDates as CanterburyCollectionDates, coversAddress as canterburyCoversAddress, findCollectionDates } from "@joshbalfour/canterbury-api"
 import { Address } from "../../entities/address"
+import { CollectionDates } from "./types"
 
 export const notEmpty = <TValue>(value?: TValue | null): value is TValue => {
   return value !== null && value !== undefined
@@ -7,7 +8,7 @@ export const notEmpty = <TValue>(value?: TValue | null): value is TValue => {
 
 export const coversAddress = (address: Address) => canterburyCoversAddress(address.data.UPRN, address.data.USRN)
 
-const collectionDatesToBins = (binInfo: CollectionDates, addressId: string) => {
+const collectionDatesToBins = (binInfo: CanterburyCollectionDates, addressId: string) => {
   // group by bin
   const { dates, status } = binInfo
   const { blackBinDay, foodBinDay, gardenBinDay, recyclingBinDay } = dates
@@ -42,7 +43,7 @@ const collectionDatesToBins = (binInfo: CollectionDates, addressId: string) => {
   }).filter(notEmpty)
 }
 
-export const getCollectionDates = async (address: Address) => {
+export const getCollectionDates = async (address: Address): Promise<CollectionDates[]> => {
   const collectionDates = await findCollectionDates(address.data.UPRN, address.data.USRN)
   return collectionDatesToBins(collectionDates, address.id)
 }

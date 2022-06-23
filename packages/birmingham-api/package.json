@@ -1,0 +1,20 @@
+{
+  "name": "@joshbalfour/birmingham-api",
+  "packageManager": "yarn@3.1.1",
+  "scripts": {
+    "start": "ts-node-dev src/index.ts",
+    "build": "tsc",
+    "test": "mocha"
+  },
+  "main": "src/index.ts",
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.3",
+    "form-data": "^4.0.0",
+    "node-fetch": "^2.6.7"
+  }
+}
