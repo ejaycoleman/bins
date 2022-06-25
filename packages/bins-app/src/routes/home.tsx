@@ -11,6 +11,7 @@ import { AnimatedLoadingIndicator } from '../components/LoadingIndicator'
 import { TopBar } from '../components/TopBar'
 import { dayjs } from '../dayjs'
 import { Outcome } from '@joshbalfour/bins-types'
+import { offWhite } from '../colors'
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -213,7 +214,7 @@ export const Home = () => {
         <HugeBold style={{ textAlign: 'left' }}>{address.firstLine}</HugeBold>
       </TopTextContainer>
       <BinsContainer
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
+        refreshControl={<RefreshControl tintColor={offWhite} refreshing={loading} onRefresh={refetch} />}
       >
         {!bins.length && <NotSupported />}
         {activeBins.map(bin => <BinCard isActive key={bin.id} {...bin} />)}

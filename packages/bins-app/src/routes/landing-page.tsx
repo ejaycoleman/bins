@@ -60,8 +60,8 @@ export const LandingPage = () => (
               Download the app to get push notifications
             </TextSmallBold>
             <ButtonsContainer>
-              <AppStoreButton href='https://itunes.apple.com/us/app/bins-app/id1498420000?mt=8' target="_blank" rel="noopener noreferrer" />
-              <PlayStoreButton href='https://play.google.com/store/apps/details?id=com.binsapp' target="_blank" rel="noopener noreferrer"/>
+              <AppStoreButton href='https://itunes.apple.com/gb/app/bin-notifier/id1629334191?mt=8' target="_blank" rel="noopener noreferrer" />
+              <PlayStoreButton href='https://play.google.com/store/apps/details?id=com.joshbalfour.bins' target="_blank" rel="noopener noreferrer"/>
             </ButtonsContainer>
             <TextSmallBold style={{ marginVertical: 21 }}>or</TextSmallBold>
           </>
