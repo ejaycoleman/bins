@@ -40,9 +40,9 @@ services:
       - .:/src
     image: node:16-alpine
     working_dir: /src/packages/bins-app
-    command: "yarn web"
+    command: "yarn prod:web"
     ports:
-      - "4030:19006"
+      - "4030:3000"
 
   db:
     image: mariadb:10.5.8
