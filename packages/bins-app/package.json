@@ -10,7 +10,7 @@
     "eject": "expo eject",
     "build:web": "expo build:web",
     "publish": "expo publish",
-    "web:prod": "expo build:web && serve -s build/web -l tcp://bins.joshbalfour.co.uk:3000"
+    "web:prod": "expo build:web && serve -s build/web -l tcp://0.0.0.0:3000"
   },
   "postinstall": "expo-yarn-workspaces",
   "dependencies": {
