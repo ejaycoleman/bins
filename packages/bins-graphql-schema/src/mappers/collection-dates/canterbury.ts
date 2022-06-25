@@ -1,10 +1,7 @@
 import { BinType, binTypes, CollectionDates as CanterburyCollectionDates, coversAddress as canterburyCoversAddress, findCollectionDates } from "@joshbalfour/canterbury-api"
 import { Address } from "../../entities/address"
 import { CollectionDates } from "./types"
-
-export const notEmpty = <TValue>(value?: TValue | null): value is TValue => {
-  return value !== null && value !== undefined
-}
+import { notEmpty } from "./utils"
 
 export const coversAddress = (address: Address) => canterburyCoversAddress(address.data.UPRN, address.data.USRN)
 
