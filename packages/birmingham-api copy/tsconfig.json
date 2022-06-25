@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.json",
-  "include": [
-    "../bournemouth-api/src"
-  ],
-  "compilerOptions": {
-    "outDir": "../bournemouth-api/dist"
-  },
-}

@@ -56,7 +56,7 @@ export class AddressLookupResolver {
   @FieldResolver()
   async bins (@Root() address: Address): Promise<Bin[]> {
     // if last updated over 24 hours ago, update the data
-    if (!address.lastUpdatedAt || Date.now() - address.lastUpdatedAt.getTime() > 24 * 60 * 60 * 1000) {
+    if (!address.lastUpdatedAt || !address.binRegion || Date.now() - address.lastUpdatedAt.getTime() > 24 * 60 * 60 * 1000) {
       await updateAddressData(address)
     }
 
