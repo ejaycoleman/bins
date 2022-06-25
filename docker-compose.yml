@@ -43,6 +43,7 @@ services:
     command: "yarn web"
     ports:
       - "4030:19006"
+    env_file: ./packages/bins-app/.env
 
   db:
     image: mariadb:10.5.8
