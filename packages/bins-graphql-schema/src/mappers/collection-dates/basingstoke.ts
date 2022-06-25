@@ -3,10 +3,6 @@ import { BinType } from "@joshbalfour/bins-types"
 import { Address } from "../../entities/address"
 import { CollectionDates } from "./types"
 
-export const notEmpty = <TValue>(value?: TValue | null): value is TValue => {
-  return value !== null && value !== undefined
-}
-
 export const coversAddress = (address: Address) => basingstokeCoversAddress(address.data.UPRN)
 
 const normaliseBinType = (binType: BasingstokeBinType): BinType => {

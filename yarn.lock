@@ -2786,7 +2786,9 @@ __metadata:
     "@joshbalfour/basingstoke-api": "workspace:^"
     "@joshbalfour/bins-types": "workspace:^"
     "@joshbalfour/birmingham-api": "workspace:^"
+    "@joshbalfour/bournemouth-api": "workspace:^"
     "@joshbalfour/canterbury-api": "workspace:^"
+    "@joshbalfour/southampton-api": "workspace:^"
     "@types/graphql-iso-date": ^3.4.0
     "@types/node-fetch": ^2.6.1
     class-validator: ^0.13.2
@@ -2852,6 +2854,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@joshbalfour/bournemouth-api@workspace:^, @joshbalfour/bournemouth-api@workspace:packages/bournemouth-api":
+  version: 0.0.0-use.local
+  resolution: "@joshbalfour/bournemouth-api@workspace:packages/bournemouth-api"
+  dependencies:
+    "@types/node-fetch": ^2.6.1
+    node-fetch: ^2.6.7
+    ts-node-dev: ^1.1.8
+    typescript: ^4.5.5
+  languageName: unknown
+  linkType: soft
+
 "@joshbalfour/canterbury-api@workspace:^, @joshbalfour/canterbury-api@workspace:packages/canterbury-api":
   version: 0.0.0-use.local
   resolution: "@joshbalfour/canterbury-api@workspace:packages/canterbury-api"
@@ -2861,6 +2874,19 @@ __metadata:
     form-data: ^4.0.0
     node-fetch: ^2.6.7
     query-string: ^7.1.1
+    ts-node-dev: ^1.1.8
+    typescript: ^4.5.5
+  languageName: unknown
+  linkType: soft
+
+"@joshbalfour/southampton-api@workspace:^, @joshbalfour/southampton-api@workspace:packages/southampton-api":
+  version: 0.0.0-use.local
+  resolution: "@joshbalfour/southampton-api@workspace:packages/southampton-api"
+  dependencies:
+    "@types/node-fetch": ^2.6.1
+    form-data: ^4.0.0
+    node-fetch: ^2.6.7
+    node-ical: ^0.15.1
     ts-node-dev: ^1.1.8
     typescript: ^4.5.5
   languageName: unknown
@@ -5053,6 +5079,15 @@ __metadata:
   dependencies:
     follow-redirects: ^1.10.0
   checksum: c87915fa0b18c15c63350112b6b3563a3e2ae524d7707de0a73d2e065e0d30c5d3da8563037bc29d4cc1b7424b5a350cb7274fa52525c6c04a615fe561c6ab11
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.26.1":
+  version: 0.26.1
+  resolution: "axios@npm:0.26.1"
+  dependencies:
+    follow-redirects: ^1.14.8
+  checksum: d9eb58ff4bc0b36a04783fc9ff760e9245c829a5a1052ee7ca6013410d427036b1d10d04e7380c02f3508c5eaf3485b1ae67bd2adbfec3683704745c8d7a6e1a
   languageName: node
   linkType: hard
 
@@ -9127,7 +9162,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.10.0":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.10.0, follow-redirects@npm:^1.14.8":
   version: 1.15.1
   resolution: "follow-redirects@npm:1.15.1"
   peerDependenciesMeta:
@@ -11953,7 +11988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^1.23.x":
+"luxon@npm:^1.21.3, luxon@npm:^1.23.x":
   version: 1.28.0
   resolution: "luxon@npm:1.28.0"
   checksum: 5250cb9f138b6048eeb0b3a9044a4ac994d0058f680c72a0da4b6aeaec8612460385639cba2b1052ef6d5564879e9ed144d686f26d9d97b38ab920d82e18281c
@@ -12864,6 +12899,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"moment-timezone@npm:^0.5.31":
+  version: 0.5.34
+  resolution: "moment-timezone@npm:0.5.34"
+  dependencies:
+    moment: ">= 2.9.0"
+  checksum: 12a1d3d52e4ba509cf1fa36bbda59d898a08fa80ab35f6c358747e93aec1f07e617cec647eaf2e8acf5f9132e581d4704d34a9edffa9a80c5cd04bf23b277595
+  languageName: node
+  linkType: hard
+
+"moment@npm:>= 2.9.0":
+  version: 2.29.3
+  resolution: "moment@npm:2.29.3"
+  checksum: 2e780e36d9a1823c08a1b6313cbb08bd01ecbb2a9062095820a34f42c878991ccba53abaa6abb103fd5c01e763724f295162a8c50b7e95b4f1c992ef0772d3f0
+  languageName: node
+  linkType: hard
+
 "move-concurrently@npm:^1.0.1":
   version: 1.0.1
   resolution: "move-concurrently@npm:1.0.1"
@@ -13146,6 +13197,18 @@ __metadata:
   dependencies:
     he: 1.2.0
   checksum: fbcf5ea22f266b36a4761d448d3db7bcee6d7570e3a8ec38cbde223fe3d705cda1df8c287907520ae2d6bac8f68ef4dacdb5fd76c375c13c50bc746e980f4a91
+  languageName: node
+  linkType: hard
+
+"node-ical@npm:^0.15.1":
+  version: 0.15.1
+  resolution: "node-ical@npm:0.15.1"
+  dependencies:
+    axios: ^0.26.1
+    moment-timezone: ^0.5.31
+    rrule: 2.6.4
+    uuid: ^8.3.1
+  checksum: e45e254f18f73e5d3543b8ffdd6420a6b690a929ace70e2bd87168839972073fd2daebefb735ccd12ab0cc46b9c4a841f73e5f30c2e3d8e5adedffe3e5777999
   languageName: node
   linkType: hard
 
@@ -15888,6 +15951,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rrule@npm:2.6.4":
+  version: 2.6.4
+  resolution: "rrule@npm:2.6.4"
+  dependencies:
+    luxon: ^1.21.3
+    tslib: ^1.10.0
+  dependenciesMeta:
+    luxon:
+      optional: true
+  checksum: 510cddbdfae9d91dab84fe484d54cd0a46f2a9cfd58c24fe470b9341f511c3999abc06fd33735884a08b369f700d87cfd49b46999f2f30b11f5b07c43858d695
+  languageName: node
+  linkType: hard
+
 "run-async@npm:^2.2.0":
   version: 2.4.1
   resolution: "run-async@npm:2.4.1"
@@ -18261,7 +18337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.0.0, uuid@npm:^8.3.2":
+"uuid@npm:^8.0.0, uuid@npm:^8.3.1, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:

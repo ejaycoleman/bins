@@ -1,5 +1,5 @@
 import { AppDataSource, Bin, Address, updateAddressData, BinStatus, PushNotification, sendPushNotifications } from "@joshbalfour/bins-graphql-schema"
-import { notEmpty } from "@joshbalfour/bins-graphql-schema/src/mappers/collection-dates/canterbury"
+import { notEmpty } from "@joshbalfour/bins-graphql-schema/src/mappers/collection-dates/utils"
 
 export const updateAllData = async () => {
   const bins = await AppDataSource.getRepository(Bin).find({
