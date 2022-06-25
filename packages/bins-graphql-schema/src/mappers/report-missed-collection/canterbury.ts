@@ -1,6 +1,11 @@
-import { getReportMissedUrl, reportMissed } from "@joshbalfour/canterbury-api"
+import { BinType } from "@joshbalfour/bins-types"
+import { getReportMissedUrl, reportMissed, BinType as CanterburyBinType } from "@joshbalfour/canterbury-api"
 import { Bin, ReportMissedCollection } from "../../entities/bin"
 import { getCollectionDates } from "../collection-dates/canterbury"
+
+const validateBinType = (binType: BinType): binType is CanterburyBinType => {
+  return binType === "Food" || binType === "Garden" || binType === "General"
+}
 
 export const reportMissedCollection = async (bin: Bin, extraInfo: any): Promise<ReportMissedCollection> => {
   const { emailAddress, firstName, lastName } = extraInfo
@@ -18,6 +23,10 @@ export const reportMissedCollection = async (bin: Bin, extraInfo: any): Promise<
     throw new Error(`Bin ${bin.id} has no status`)
   }
   const { workpack } = binInfo.status
+
+  if (!validateBinType(bin.type)) {
+    throw new Error(`Bin ${bin.id} has invalid type ${bin.type}`)
+  }
 
   const fallbackUrl = getReportMissedUrl({
     uprn: UPRN,
