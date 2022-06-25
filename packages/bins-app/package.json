@@ -10,7 +10,7 @@
     "eject": "expo eject",
     "build:web": "expo build:web",
     "publish": "expo publish",
-    "prod:web": "expo build:web && serve -s build/web"
+    "web:prod": "expo build:web && serve -s build/web"
   },
   "postinstall": "expo-yarn-workspaces",
   "dependencies": {
