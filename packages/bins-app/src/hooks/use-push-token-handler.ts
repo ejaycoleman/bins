@@ -1,9 +1,8 @@
 import * as Notifications from 'expo-notifications'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { useEnableNotifications } from './use-enable-notifications'
-import { useHomeAddressId } from './use-home-addressId'
 import { Platform } from 'react-native'
 
 const namespace = 'binsapp'
@@ -15,6 +14,32 @@ export const persistPushToken = async (pushToken?: string) => {
     await AsyncStorage.setItem(pushTokenKey, pushToken)
   } else {
     await AsyncStorage.removeItem(pushTokenKey)
+  }
+}
+
+export const usePushToken = () => {
+  const [loading, setLoading] = useState(true)
+  const [pushToken, setPushToken] = useState<string | undefined>(undefined)
+
+  const refetch = async () => {
+    const pushToken = await getPushToken()
+    setPushToken(pushToken)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    refetch()
+    const int = setInterval(refetch, 300)
+
+    return () => {
+      clearInterval(int)
+    }
+  })
+
+  return {
+    pushToken,
+    loading,
+    refetch,
   }
 }
 
@@ -38,6 +63,14 @@ export const getRemotePushToken = async (): Promise<string | undefined> => {
       experienceId: '@joshbalfour/bins',
     })
     await persistPushToken(expoPushToken.data)
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
     return expoPushToken.data
   } catch (e) {
     console.error(e)
@@ -46,8 +79,7 @@ export const getRemotePushToken = async (): Promise<string | undefined> => {
 }
 
 export const usePushTokenHandler = () => {
-  const { homeAddressId } = useHomeAddressId()
-  const { enableNotifications } = useEnableNotifications(homeAddressId)
+  const { enableNotifications } = useEnableNotifications()
 
   const callback = async () => {
     const token = await getRemotePushToken()
@@ -57,12 +89,10 @@ export const usePushTokenHandler = () => {
   }
 
   useEffect(() => {
-    if (homeAddressId) {
-      callback()
-      const sub = Notifications.addPushTokenListener(callback)
-      return () => {
-        sub.remove()
-      }
+    callback()
+    const sub = Notifications.addPushTokenListener(callback)
+    return () => {
+      sub.remove()
     }
-  }, [homeAddressId])
+  }, [])
 }

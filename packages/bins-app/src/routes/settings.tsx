@@ -9,7 +9,8 @@ import { Button, ButtonVariant } from '../components/Button'
 import { useEnableNotifications } from '../hooks/use-enable-notifications'
 import { Alert, Linking, Platform, ScrollView, Share } from 'react-native'
 import { useDownloadData } from '../hooks/use-download-data'
-import { getRemotePushToken, persistPushToken } from '../hooks/use-push-token-handler'
+import { getRemotePushToken, persistPushToken, usePushToken } from '../hooks/use-push-token-handler'
+import { useDevice } from '../hooks/use-device'
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -37,20 +38,23 @@ const TopTextContainer = styled.View`
 
 const PushNotificationButton = () => {
   const [status] = usePermissions()
-  const { homeAddressId } = useHomeAddressId()
-  const { disableNotifications, loading } = useEnableNotifications(homeAddressId)
+  const { disableNotifications, loading } = useEnableNotifications()
+  const { pushToken, refetch } = usePushToken()
+  const { device, loading: deviceLoading } = useDevice(pushToken)
 
   const disable = async () => {
     const pushToken = await getRemotePushToken()
     await disableNotifications(pushToken)
+    await persistPushToken(null)
+    await refetch()
   }
   const enable = async () => {
     await requestPermissionsAsync()
   }
 
-  return <Button loading={loading} text={
+  return <Button loading={loading || deviceLoading} text={
     status ? (
-      status.granted ? 'Disable Notifications' : (
+      (status.granted && device) ? 'Disable Notifications' : (
         status.canAskAgain ? 'Enable Notifications' : 'Enable Notifications from Settings'
       )
     ) : ''
