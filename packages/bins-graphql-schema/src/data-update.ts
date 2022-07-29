@@ -27,7 +27,9 @@ export const updateAddressData = async (address: Address) => {
   const binRepository = AppDataSource.getRepository(Bin)
   const binCollectionRepository = AppDataSource.getRepository(BinCollection)
   const binStatusRepository = AppDataSource.getRepository(BinStatus)
+  const prevBinRegion = address.binRegion
   const collectionDates = await findCollectionDates(address)
+  const newBinRegion = address.binRegion
   const statuses: BinStatus[] = []
   const collections: BinCollection[] = []
 
@@ -85,5 +87,7 @@ export const updateAddressData = async (address: Address) => {
 
   return {
     changedStatuses,
+    address,
+    binRegionChanged: prevBinRegion !== newBinRegion,
   }
 }

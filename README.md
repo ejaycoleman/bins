@@ -7,10 +7,6 @@ On collection day, let us know if they weren't collected and we'll inform the co
 
 ## Todo
 
-* MVP
-  * store presence
-  * testflight/test android proper
-
 * TEST
 
 * V1 app/website
@@ -19,6 +15,7 @@ On collection day, let us know if they weren't collected and we'll inform the co
     * report missed collection
     * push notification banner thing
     * pull to refresh not working on web
+    * Loading not spinning on android
   * web
     * push
     * fix animation className hack
