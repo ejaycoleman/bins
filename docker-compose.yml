@@ -1,36 +1,35 @@
-version: "3"
+version: "3.9"
+
+x-base: &base
+  image: node:alpine
+  command: "yarn start"
+  volumes:
+    - .:/src
+  environment: &base_env
+    DB_HOST: db:3306
+    DB_USER: root
+    DB_PASSWORD: bins
+    DB_DATABASE: bins
 
 services: 
-
-  base:
-    image: node:alpine
-    command: "yarn start"
-    volumes:
-      - .:/src
-    environment:
-      DB_HOST: db:3306
-      DB_USER: root
-      DB_PASSWORD: bins
-      DB_DATABASE: bins
-
   graphql:
-    extends:
-      service: base
+    <<: *base
     working_dir: /src/packages/bins-graphql-server
     ports:
       - "4010:4010"
     environment:
+      <<: *base_env
       PORT: 4010
     depends_on:
       - db
 
   worker:
-    extends:
-      service: base
+    <<: *base
     working_dir: /src/packages/bins-worker
     ports:
       - "4020:4020"
     environment:
+      <<: *base_env
       PORT: 4020
     depends_on:
       - db

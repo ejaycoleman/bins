@@ -8,6 +8,8 @@ On collection day, let us know if they weren't collected and we'll inform the co
 ## Todo
 
 * TEST
+  * bin collected notif not working
+  * Collection Made EEEE at 11:07 am
 
 * V1 app/website
   * (web)app

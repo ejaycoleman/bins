@@ -1,6 +1,7 @@
 import 'mysql2/promise'
 import { DataSource } from 'typeorm'
 import entities from './entities'
+import { subscribers } from './subscribers'
 
 const {
 	DB_HOST,
@@ -32,6 +33,7 @@ export const AppDataSource = new DataSource({
   database: DB_DATABASE,
 
   entities,
+	subscribers,
 })
 
 /* istanbul ignore next */
@@ -42,6 +44,7 @@ export const initializeDataSource = async () => {
 			database: ':memory:',
 			dropSchema: true,
 			entities,
+			subscribers,
 			synchronize: true,
 			logging: false
 		})

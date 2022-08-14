@@ -56,7 +56,7 @@ const formatDate = (date: Date) => {
   if (dayjs(date).isTomorrow()) return 'Tomorrow'
   if (dayjs(date).isYesterday()) return 'Yesterday'
 
-  return dayjs(date).format('EEEE')
+  return dayjs(date).format('dddd')
 }
 
 const getBinText = ({ status, collections, isActive }: { status?: BinType['status']; collections: Date[]; isActive?: boolean }) => {
