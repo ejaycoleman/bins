@@ -2219,6 +2219,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo/config@npm:6.0.26":
+  version: 6.0.26
+  resolution: "@expo/config@npm:6.0.26"
+  dependencies:
+    "@babel/code-frame": ~7.10.4
+    "@expo/config-plugins": 4.1.5
+    "@expo/config-types": ^45.0.0
+    "@expo/json-file": 8.2.36
+    getenv: ^1.0.0
+    glob: 7.1.6
+    require-from-string: ^2.0.2
+    resolve-from: ^5.0.0
+    semver: 7.3.2
+    slugify: ^1.3.4
+    sucrase: ^3.20.0
+  checksum: d9e54c16d55fc7f6c4d11360ea3ce8d883351734a21f2d42feb85e56794619f13fda993429dee9bf8b83fc4d9bcaaafc388a670da95b97a46599899604fa8c23
+  languageName: node
+  linkType: hard
+
 "@expo/config@npm:6.0.6":
   version: 6.0.6
   resolution: "@expo/config@npm:6.0.6"
@@ -2371,7 +2390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/metro-config@npm:0.3.18, @expo/metro-config@npm:~0.3.16, @expo/metro-config@npm:~0.3.7":
+"@expo/metro-config@npm:0.3.18, @expo/metro-config@npm:~0.3.16":
   version: 0.3.18
   resolution: "@expo/metro-config@npm:0.3.18"
   dependencies:
@@ -2384,6 +2403,22 @@ __metadata:
     resolve-from: ^5.0.0
     sucrase: ^3.20.0
   checksum: 719157b99b5c096d7a9e2fd23e547203cf8fdd6e93533fc75217a8ac248b4cfac24a970d1a53a878e9d3ab1f722b3a4ef2267cddcdad982f763302c6b6438103
+  languageName: node
+  linkType: hard
+
+"@expo/metro-config@npm:0.3.19":
+  version: 0.3.19
+  resolution: "@expo/metro-config@npm:0.3.19"
+  dependencies:
+    "@expo/config": 6.0.26
+    "@expo/json-file": 8.2.36
+    chalk: ^4.1.0
+    debug: ^4.3.2
+    find-yarn-workspace-root: ~2.0.0
+    getenv: ^1.0.0
+    resolve-from: ^5.0.0
+    sucrase: ^3.20.0
+  checksum: e3b838642af61015c19ee832493aeabe7db426c327b6f02f9f2f4112ea66e86f5012f7e011168bcb501307fa3b4aeb9b9d9e70a7e3e9579ccc805628a56115ce
   languageName: node
   linkType: hard
 
@@ -5419,7 +5454,7 @@ __metadata:
     expo-navigation-bar: ~1.2.0
     expo-notifications: ~0.15.4
     expo-status-bar: ~1.3.0
-    expo-updates: ~0.13.3
+    expo-updates: ~0.13.4
     expo-yarn-workspaces: ^1.7.0
     graphql: ^15.3.0
     path: ^0.12.7
@@ -8710,14 +8745,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-updates@npm:~0.13.3":
-  version: 0.13.3
-  resolution: "expo-updates@npm:0.13.3"
+"expo-updates@npm:~0.13.4":
+  version: 0.13.4
+  resolution: "expo-updates@npm:0.13.4"
   dependencies:
     "@expo/code-signing-certificates": 0.0.1
-    "@expo/config": ^6.0.14
+    "@expo/config": ~6.0.23
     "@expo/config-plugins": ^4.0.14
-    "@expo/metro-config": ~0.3.7
+    "@expo/metro-config": 0.3.19
     arg: 4.1.0
     expo-eas-client: ~0.2.0
     expo-manifests: ~0.3.0
@@ -8730,7 +8765,7 @@ __metadata:
     expo: "*"
   bin:
     expo-updates: bin/cli.js
-  checksum: 05b5f0f6152dc75c0efccd739f9882ae1a2b31b8140bf655c495854101b59fd4620387ed7a8ab8bf5317d8d206a7737b52a5596763e1cf18ca5d538a0f197900
+  checksum: 922186bd9af1002661639fa5323644b9ed2c20cb9a0ee48b6d199459eba33c476ef3e1406f293f219b5f2c1ebc065cdf13f71fd04a3e5e47664be33ebd4b473a
   languageName: node
   linkType: hard
 
