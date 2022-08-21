@@ -4,6 +4,7 @@ import { primary, primaryDark, primaryLight } from '../colors'
 import { LinkSmallBold } from './Text'
 import React from 'react'
 import { AnimatedLoadingIndicator } from './LoadingIndicator'
+import { Platform } from 'react-native'
 
 const buttonStyles = css`
   display: flex;
@@ -19,10 +20,11 @@ const buttonStyles = css`
   color: ${primaryDark};
   min-height: 56px;
   max-width: 336px;
-
-  :hover {
-    background-color: ${primaryLight};
-  }
+  ${Platform.OS === 'web' && css`
+    :hover {
+      background-color: ${primaryLight};
+    }
+  `}
 `
 
 const buttonVariantStyles = (variant: ButtonVariant) => {
