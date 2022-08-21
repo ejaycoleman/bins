@@ -28,13 +28,13 @@ export class NotificationResolver {
         })
       )
     }
-    if (!address.devices?.some(d => d.id === d.id)) {
+    if (!address.devices?.some(d => d.id === device?.id)) {
       address.devices = [
         ...(address.devices || []),
         device,
       ]
+      await addressRepository.save(address)
     }
-    await addressRepository.save(address)
 
     return device
   }

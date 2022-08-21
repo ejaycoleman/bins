@@ -21,7 +21,7 @@ const binStatusChanged = async (binStatusId: string) => {
     where: {
       id: binStatusId,
     },
-    relations: ['bin'],
+    relations: ['bin', 'bin.address', 'bin.address.devices'],
   })
   if (!binStatus) {
     return
