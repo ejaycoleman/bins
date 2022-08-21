@@ -2,8 +2,9 @@ import * as Notifications from 'expo-notifications'
 import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { useEnableNotifications } from './use-enable-notifications'
+import { enableNotifications, useEnableNotifications } from './use-enable-notifications'
 import { Platform } from 'react-native'
+import { client } from '../graphql'
 
 const namespace = 'binsapp'
 const pushTokenKey = `${namespace}:pushToken2`
@@ -78,6 +79,13 @@ export const getRemotePushToken = async (): Promise<string | undefined> => {
   }
 }
 
+export const runOnStart = async () => {
+  const token = await getRemotePushToken()
+  if (token) {
+    await enableNotifications(token, client)
+  }
+}
+
 export const usePushTokenHandler = () => {
   const { enableNotifications } = useEnableNotifications()
 
@@ -89,7 +97,6 @@ export const usePushTokenHandler = () => {
   }
 
   useEffect(() => {
-    callback()
     const sub = Notifications.addPushTokenListener(callback)
     return () => {
       sub.remove()

@@ -21,6 +21,7 @@ import { LandingPage } from './routes/landing-page'
 import { PushTokenHandler } from './components/PushTokenHandler'
 import { TextSmallBold } from './components/Text'
 import * as Sentry from 'sentry-expo'
+import { runOnStart } from './hooks/use-push-token-handler'
 
 const isWebAndProd = Platform.OS === 'web' && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('10.')
 
@@ -29,6 +30,8 @@ Sentry.init({
   enableInExpoDevelopment: !isWebAndProd,
   debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
 })
+
+runOnStart().catch(console.error)
 
 const Redirect = () => {
   const { homeAddressId, loading } = useHomeAddressId()

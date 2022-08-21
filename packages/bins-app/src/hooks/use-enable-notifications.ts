@@ -1,5 +1,5 @@
-import { gql, useMutation } from "@apollo/client"
-import { getHomeAddressId, useHomeAddressId } from "./use-home-addressId"
+import { ApolloClient, gql, useMutation } from "@apollo/client"
+import { getHomeAddressId } from "./use-home-addressId"
 
 const EnableNotifications = gql`
   mutation enableNotifications($addressId: String!, $token: String!) {
@@ -19,6 +19,21 @@ const DisableNotifications = gql`
 type Device = {
   id: string
   token: string
+}
+
+export const enableNotifications = async (token: string, client: ApolloClient<any>) => {
+  const addressId = await getHomeAddressId()
+
+  if (addressId && token) {
+    const { data, errors } = await client.mutate({
+      mutation: EnableNotifications,
+      variables: { addressId, token },
+    })
+    if (errors) {
+      throw new Error(errors[0].message)
+    }
+    return data.enableNotifications as Device | undefined
+  }
 }
 
 export const useEnableNotifications = () => {
